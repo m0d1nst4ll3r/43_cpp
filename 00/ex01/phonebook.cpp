@@ -5,7 +5,7 @@ int	main()
 {
 	PhoneBook	phonebook;
 	std::string	input;
-	std::cout << "Welcome to the 📞PhoneBook📖\nCommands: ADD, SEARCH, EXIT\n";
+	std::cout << "\x1b[32m" << "Welcome to the 📞PhoneBook📖\nCommands: ADD, SEARCH, EXIT\n" << "\x1b[0m";
 	while (std::cin >> input)
 	{
 		if (input == "EXIT")

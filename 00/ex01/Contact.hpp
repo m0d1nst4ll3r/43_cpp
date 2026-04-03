@@ -1,8 +1,10 @@
 #ifndef CONTACT
 # define CONTACT
+# include <iostream>
 
 class Contact
 {
+	// Private by default
 	std::string	firstName;
 	std::string	lastName;
 	std::string	nickName;
@@ -11,9 +13,17 @@ class Contact
 	public:
 	Contact()
 	{
+		// Used when declaring contactList[8]
+		// Not strictly necessary to initialize strings
+		firstName = "";
+		lastName = "";
+		nickName = "";
+		phoneNumber = "";
+		darkestSecret = "";
 	};
 	Contact(std::string firstName, std::string lastName, std::string nickName, std::string phoneNumber, std::string darkestSecret)
 	{
+		// Used when creating a new contact
 		this->firstName = firstName;
 		this->lastName = lastName;
 		this->phoneNumber = phoneNumber;
@@ -32,14 +42,16 @@ class Contact
 	{
 		return nickName;
 	};
-	std::string	getPhoneNumber()
-	{
-		return phoneNumber;
-	};
-	std::string	getDarkestSecret()
-	{
-		return darkestSecret;
-	};
+	void	display();
 };
+
+void	Contact::display()
+{
+	std::cout << "\x1b[33m" << "First Name: " << "\x1b[0m" << firstName << '\n';
+	std::cout << "\x1b[33m" << "Last Name: " << "\x1b[0m" << lastName << '\n';
+	std::cout << "\x1b[33m" << "Nickname: " << "\x1b[0m" << nickName << '\n';
+	std::cout << "\x1b[33m" << "Phone Number: " << "\x1b[0m" << phoneNumber << '\n';
+	std::cout << "\x1b[33m" << "Darkest Secret: " << "\x1b[0m" << darkestSecret << '\n';
+}
 
 #endif
