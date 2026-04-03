@@ -6,12 +6,14 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 16:45:41 by rapohlen          #+#    #+#              #
-#    Updated: 2026/04/03 12:40:30 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/04/03 18:34:20 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
-CFILES		= phonebook.cpp
+CFILES		= main.cpp \
+			  PhoneBook.cpp \
+			  Contact.cpp
 SRCDIR		= .
 SRC			= $(addprefix $(SRCDIR)/, $(CFILES))
 
