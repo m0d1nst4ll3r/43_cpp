@@ -20,9 +20,9 @@ class Contact
 	Contact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret);
 
 	// Getters
-	std::string	getFirstName() const;
-	std::string	getLastName() const;
-	std::string	getNickName() const;
+	const std::string	&getFirstName() const;
+	const std::string	&getLastName() const;
+	const std::string	&getNickName() const;
 
 	void	display() const; // Display a contact
 };

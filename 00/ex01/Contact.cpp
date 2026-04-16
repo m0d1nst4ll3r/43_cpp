@@ -5,17 +5,17 @@ Contact::Contact() {}
 Contact::Contact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
 	: firstName(firstName), lastName(lastName), nickName(nickName), phoneNumber(phoneNumber), darkestSecret(darkestSecret) {}
 
-std::string	Contact::getFirstName() const
+const std::string	&Contact::getFirstName() const
 {
 	return firstName;
 }
 
-std::string	Contact::getLastName() const
+const std::string	&Contact::getLastName() const
 {
 	return lastName;
 }
 
-std::string	Contact::getNickName() const
+const std::string	&Contact::getNickName() const
 {
 	return nickName;
 }

@@ -59,22 +59,8 @@ namespace
 PhoneBook::PhoneBook() : numContacts(0) {}
 // Constructor syntax  ^-- initializer list
 
-void	PhoneBook::addContact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
-{
-	contactList[0] = Contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
-}
-
-// [0 -> 1], [1 -> 2], etc...
-void	PhoneBook::shiftContacts()
-{
-	for (int i = 7; i > 0; --i)
-		contactList[i] = contactList[i - 1];
-}
-
 void	PhoneBook::incrementContacts()
 {
-	if (numContacts < 8)
-		numContacts++;
 }
 
 // Display all contacts
@@ -115,9 +101,14 @@ bool	PhoneBook::add()
 	std::cout << "\x1b[32m" << "Please enter new contact info:\n" << "\x1b[0m";
 	if (!promptNewContact(firstName, lastName, nickName, phoneNumber, darkestSecret))
 		return false;
-	incrementContacts();
-	shiftContacts();
-	addContact(firstName, lastName, nickName, phoneNumber, darkestSecret);
+	// Increment contacts
+	if (numContacts < 8)
+		numContacts++;
+	else // Shift contacts
+		for (int i = 0; i < 7; ++i)
+			contactList[i] = contactList[i + 1];
+	// Add new contact
+	contactList[numContacts - 1] = Contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
 	std::cout << "\x1b[32m" << "Contact was added successfully\n" << "\x1b[0m";
 	return true;
 }
