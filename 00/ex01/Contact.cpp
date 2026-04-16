@@ -3,30 +3,24 @@
 Contact::Contact() {}
 
 Contact::Contact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
-{
-	this->firstName = firstName;
-	this->lastName = lastName;
-	this->phoneNumber = phoneNumber;
-	this->darkestSecret = darkestSecret;
-	this->nickName = nickName;
-}
+	: firstName(firstName), lastName(lastName), nickName(nickName), phoneNumber(phoneNumber), darkestSecret(darkestSecret) {}
 
-std::string	Contact::getFirstName()
+std::string	Contact::getFirstName() const
 {
 	return firstName;
 }
 
-std::string	Contact::getLastName()
+std::string	Contact::getLastName() const
 {
 	return lastName;
 }
 
-std::string	Contact::getNickName()
+std::string	Contact::getNickName() const
 {
 	return nickName;
 }
 
-void	Contact::display()
+void	Contact::display() const
 {
 	std::cout << "\x1b[33m" << "First Name: " << "\x1b[0m" << firstName << '\n';
 	std::cout << "\x1b[33m" << "Last Name: " << "\x1b[0m" << lastName << '\n';

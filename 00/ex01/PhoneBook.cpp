@@ -18,7 +18,7 @@ namespace
 	// Display single entry, no more than 10 chars, if > 10, truncate with '.'
 	void	displayTruncated(const std::string &toDisplay)
 	{
-		size_t	size = toDisplay.size();
+		std::size_t	size = toDisplay.size();
 
 		if (size <= 10)
 		{
@@ -56,15 +56,12 @@ namespace
 	}
 }
 
-PhoneBook::PhoneBook()
-{
-	numContacts = 0;
-}
+PhoneBook::PhoneBook() : numContacts(0) {}
+// Constructor syntax  ^-- initializer list
 
 void	PhoneBook::addContact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
 {
-	Contact newContact(firstName, lastName, nickName, phoneNumber, darkestSecret);
-	contactList[0] = newContact;
+	contactList[0] = Contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
 }
 
 // [0 -> 1], [1 -> 2], etc...
@@ -81,7 +78,7 @@ void	PhoneBook::incrementContacts()
 }
 
 // Display all contacts
-void	PhoneBook::display()
+void	PhoneBook::display() const
 {
 	std::cout << "\x1b[36m";
 	std::cout << "/-------------------------------------------\\\n";
@@ -90,7 +87,7 @@ void	PhoneBook::display()
 	if (!numContacts)
 		std::cout << "|           (Phonebook is empty!)           |\n";
 	else
-		std::cout << "|     Index|First Name| Last Name|   Surname|\n"
+		std::cout << "|     Index|First Name| Last Name|  Nickname|\n"
 		<< "|----------|----------|----------|----------|\n";
 	for (int i = 0; i < numContacts; ++i)
 	{
@@ -126,14 +123,14 @@ bool	PhoneBook::add()
 }
 
 // Returns false if cin was closed (Ctrl+D)
-bool	PhoneBook::search()
+bool	PhoneBook::search() const
 {
 	int	index;
 	display();
 	if (!numContacts)
 		return true;
 	std::cout << "\x1b[32m" << "Please enter contact index: " << "\x1b[0m";
-	while (1)
+	while (true)
 	{
 		if (!(std::cin >> index))
 		{
@@ -152,6 +149,7 @@ bool	PhoneBook::search()
 			}
 			else
 			{
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				std::cout << "\x1b[32m" << "Contact #" << index << " info:\n" << "\x1b[0m";
 				contactList[index - 1].display();
 				return true;

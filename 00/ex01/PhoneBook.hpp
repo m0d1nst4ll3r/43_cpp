@@ -12,7 +12,7 @@ class PhoneBook
 	int			numContacts;
 
 	// Private methods
-	void	display(); // Display phonebook contents
+	void	display() const; // Display phonebook contents
 	void	shiftContacts(); // Shift contacts to make room for a new one
 	void	incrementContacts(); // Up to 8
 	void	addContact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret);
@@ -21,7 +21,7 @@ class PhoneBook
 	public:
 	PhoneBook(); // Empty constructor
 	bool	add(); // Add new contact
-	bool	search(); // Search in phonebook
+	bool	search() const; // Search in phonebook
 };
 
 #endif
