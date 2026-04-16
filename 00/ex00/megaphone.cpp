@@ -1,15 +1,16 @@
-#include <cctype>
-#include <string>
-#include <iostream>
+#include <cctype> //toupper
+#include <string> //string type & methods
+#include <iostream> //cout cin
 
 namespace
 {
-	const std::string whitespace = " \t\n\r";
+	const std::string whitespace = " \t\n\r"; //like a #define in C, but better
 
 	std::string	transformToUppercase(std::string str)
 	{
+		//iterator is just another way to iterate in a loop
 		for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-			*it = std::toupper(static_cast<unsigned char>(*it));
+			*it = std::toupper(static_cast<unsigned char>(*it)); //toupper needs unsigned char param
 		return str;
 	}
 
@@ -18,7 +19,6 @@ namespace
 		std::size_t start = str.find_first_not_of(whitespace);
 		if (start == std::string::npos)
 			return "";
-
 		std::size_t end = str.find_last_not_of(whitespace);
 		return str.substr(start, end - start + 1);
 	}
