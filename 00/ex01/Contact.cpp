@@ -2,7 +2,7 @@
 
 Contact::Contact() {}
 
-Contact::Contact(std::string firstName, std::string lastName, std::string nickName, std::string phoneNumber, std::string darkestSecret)
+Contact::Contact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
 {
 	this->firstName = firstName;
 	this->lastName = lastName;

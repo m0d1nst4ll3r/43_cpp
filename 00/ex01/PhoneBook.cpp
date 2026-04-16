@@ -2,8 +2,21 @@
 
 namespace
 {
+	const std::string	whitespace = " \t\n\r";
+
+	// Trim input of whitespaces, reject blank input
+	bool	trimAndValidate(std::string &entry)
+	{
+		std::size_t start = entry.find_first_not_of(whitespace);
+		if (start == std::string::npos)
+			return false; // Reject blank input
+		std::size_t end = entry.find_last_not_of(whitespace);
+		entry = entry.substr(start, end - start + 1);
+		return true;
+	}
+
 	// Display single entry, no more than 10 chars, if > 10, truncate with '.'
-	void	displayTruncated(std::string toDisplay)
+	void	displayTruncated(const std::string &toDisplay)
 	{
 		size_t	size = toDisplay.size();
 
@@ -18,11 +31,12 @@ namespace
 	}
 
 	// Doesn't accept empty strings
-	bool	promptUser(std::string prompt, std::string &entry)
+	bool	promptUser(const std::string &prompt, std::string &entry)
 	{
 		std::cout << "\x1b[33m" << prompt << "\x1b[0m";
-		if (std::cin >> entry)
-			return true;
+		while (std::getline(std::cin, entry))
+			if (trimAndValidate(entry))
+				return true;
 		return false;
 	}
 
@@ -42,7 +56,12 @@ namespace
 	}
 }
 
-void	PhoneBook::addContact(std::string firstName, std::string lastName, std::string nickName, std::string phoneNumber, std::string darkestSecret)
+PhoneBook::PhoneBook()
+{
+	numContacts = 0;
+}
+
+void	PhoneBook::addContact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret)
 {
 	Contact newContact(firstName, lastName, nickName, phoneNumber, darkestSecret);
 	contactList[0] = newContact;
@@ -61,8 +80,6 @@ void	PhoneBook::incrementContacts()
 		numContacts++;
 }
 
-PhoneBook::PhoneBook() {}
-
 // Display all contacts
 void	PhoneBook::display()
 {
@@ -73,10 +90,11 @@ void	PhoneBook::display()
 	if (!numContacts)
 		std::cout << "|           (Phonebook is empty!)           |\n";
 	else
-		std::cout << "|     Index|First Name| Last Name|   Surname|\n";
+		std::cout << "|     Index|First Name| Last Name|   Surname|\n"
+		<< "|----------|----------|----------|----------|\n";
 	for (int i = 0; i < numContacts; ++i)
 	{
-		std::cout << "|         " << i;
+		std::cout << "|         " << i + 1;
 		std::cout << "|";
 		displayTruncated(contactList[i].getFirstName());
 		std::cout << "|";
@@ -127,7 +145,7 @@ bool	PhoneBook::search()
 		}
 		else
 		{
-			if (index < 0 || index >= numContacts)
+			if (index < 1 || index > numContacts)
 			{
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				std::cout << "\x1b[33m" << "Index is out of bounds, try again: " << "\x1b[0m";
@@ -135,7 +153,7 @@ bool	PhoneBook::search()
 			else
 			{
 				std::cout << "\x1b[32m" << "Contact #" << index << " info:\n" << "\x1b[0m";
-				contactList[index].display();
+				contactList[index - 1].display();
 				return true;
 			}
 		}
