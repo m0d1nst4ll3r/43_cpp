@@ -72,6 +72,8 @@ void	PhoneBook::display()
 	std::cout << "|                                           |\n";
 	if (!numContacts)
 		std::cout << "|           (Phonebook is empty!)           |\n";
+	else
+		std::cout << "|     Index|First Name| Last Name|   Surname|\n";
 	for (int i = 0; i < numContacts; ++i)
 	{
 		std::cout << "|         " << i;
