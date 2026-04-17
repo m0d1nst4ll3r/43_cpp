@@ -1,30 +1,30 @@
-#ifndef CONTACT
-# define CONTACT
-# include <iostream>
-# include <string>
+#ifndef __CONTACT_H__
+#define __CONTACT_H__
 
-class Contact
-{
-	// Private data members
-	std::string	firstName;
-	std::string	lastName;
-	std::string	nickName;
-	std::string	phoneNumber;
-	std::string	darkestSecret;
+#include <string>
 
-	// Public methods
+class Contact {
+
+
 	public:
-	// Empty constructor
 	Contact();
-	// Args constructor
-	Contact(const std::string &firstName, const std::string &lastName, const std::string &nickName, const std::string &phoneNumber, const std::string &darkestSecret);
+	Contact(const std::string& firstName, const std::string& lastName, const std::string& nickName, const std::string& phoneNumber, const std::string& darkestSecret);
 
-	// Getters
-	const std::string	&getFirstName() const;
-	const std::string	&getLastName() const;
-	const std::string	&getNickName() const;
+	const std::string&	getFirstName() const;
+	const std::string&	getLastName() const;
+	const std::string&	getNickName() const;
 
-	void	display() const; // Display a contact
+	void	display() const;
+
+
+	private:
+
+	std::string	_firstName;
+	std::string	_lastName;
+	std::string	_nickName;
+	std::string	_phoneNumber;
+	std::string	_darkestSecret;
+
 };
 
-#endif
+#endif /* __CONTACT_H__ */

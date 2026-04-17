@@ -1,11 +1,15 @@
+#include "Contact.hpp"
 #include "PhoneBook.hpp"
+#include <iostream>
+#include <limits>
+#include <string>
 
 namespace
 {
 	const std::string	whitespace = " \t\n\r";
 
 	// Trim input of whitespaces, reject blank input
-	bool	trimAndValidate(std::string &entry)
+	bool	trimAndValidate(std::string& entry)
 	{
 		std::size_t start = entry.find_first_not_of(whitespace);
 		if (start == std::string::npos)
@@ -16,7 +20,7 @@ namespace
 	}
 
 	// Display single entry, no more than 10 chars, if > 10, truncate with '.'
-	void	displayTruncated(const std::string &toDisplay)
+	void	displayTruncated(const std::string& toDisplay)
 	{
 		std::size_t	size = toDisplay.size();
 
@@ -31,7 +35,7 @@ namespace
 	}
 
 	// Doesn't accept empty strings
-	bool	promptUser(const std::string &prompt, std::string &entry)
+	bool	promptUser(const std::string& prompt, std::string& entry)
 	{
 		std::cout << "\x1b[33m" << prompt << "\x1b[0m";
 		while (std::getline(std::cin, entry))
@@ -40,7 +44,7 @@ namespace
 		return false;
 	}
 
-	bool	promptNewContact(std::string &firstName, std::string &lastName, std::string &nickName, std::string &phoneNumber, std::string &darkestSecret)
+	bool	promptNewContact(std::string& firstName, std::string& lastName, std::string& nickName, std::string& phoneNumber, std::string& darkestSecret)
 	{
 		if (!promptUser("First Name: ", firstName))
 			return false;
@@ -56,34 +60,30 @@ namespace
 	}
 }
 
-PhoneBook::PhoneBook() : numContacts(0) {}
+PhoneBook::PhoneBook() : _numContacts(0) {}
 // Constructor syntax  ^-- initializer list
 
-void	PhoneBook::incrementContacts()
-{
-}
-
 // Display all contacts
-void	PhoneBook::display() const
+void	PhoneBook::_display() const
 {
 	std::cout << "\x1b[36m";
 	std::cout << "/-------------------------------------------\\\n";
 	std::cout << "|             PHONEBOOK CONTENTS            |\n";
 	std::cout << "|                                           |\n";
-	if (!numContacts)
+	if (!_numContacts)
 		std::cout << "|           (Phonebook is empty!)           |\n";
 	else
 		std::cout << "|     Index|First Name| Last Name|  Nickname|\n"
 		<< "|----------|----------|----------|----------|\n";
-	for (int i = 0; i < numContacts; ++i)
+	for (int i = 0; i < _numContacts; ++i)
 	{
 		std::cout << "|         " << i + 1;
 		std::cout << "|";
-		displayTruncated(contactList[i].getFirstName());
+		displayTruncated(_contactList[i].getFirstName());
 		std::cout << "|";
-		displayTruncated(contactList[i].getLastName());
+		displayTruncated(_contactList[i].getLastName());
 		std::cout << "|";
-		displayTruncated(contactList[i].getNickName());
+		displayTruncated(_contactList[i].getNickName());
 		std::cout << "|\n";
 	}
 	std::cout << "\\-------------------------------------------/\n";
@@ -102,13 +102,13 @@ bool	PhoneBook::add()
 	if (!promptNewContact(firstName, lastName, nickName, phoneNumber, darkestSecret))
 		return false;
 	// Increment contacts
-	if (numContacts < 8)
-		numContacts++;
+	if (_numContacts < 8)
+		_numContacts++;
 	else // Shift contacts
 		for (int i = 0; i < 7; ++i)
-			contactList[i] = contactList[i + 1];
+			_contactList[i] = _contactList[i + 1];
 	// Add new contact
-	contactList[numContacts - 1] = Contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
+	_contactList[_numContacts - 1] = Contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
 	std::cout << "\x1b[32m" << "Contact was added successfully\n" << "\x1b[0m";
 	return true;
 }
@@ -117,8 +117,8 @@ bool	PhoneBook::add()
 bool	PhoneBook::search() const
 {
 	int	index;
-	display();
-	if (!numContacts)
+	_display();
+	if (!_numContacts)
 		return true;
 	std::cout << "\x1b[32m" << "Please enter contact index: " << "\x1b[0m";
 	while (true)
@@ -133,7 +133,7 @@ bool	PhoneBook::search() const
 		}
 		else
 		{
-			if (index < 1 || index > numContacts)
+			if (index < 1 || index > _numContacts)
 			{
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				std::cout << "\x1b[33m" << "Index is out of bounds, try again: " << "\x1b[0m";
@@ -142,7 +142,7 @@ bool	PhoneBook::search() const
 			{
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				std::cout << "\x1b[32m" << "Contact #" << index << " info:\n" << "\x1b[0m";
-				contactList[index - 1].display();
+				_contactList[index - 1].display();
 				return true;
 			}
 		}
