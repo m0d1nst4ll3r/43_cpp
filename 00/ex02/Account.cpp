@@ -7,16 +7,25 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
+// Special index-incrementing free function
+
+// This generates unique indexes for accounts unrelated to account closures
+static int getNextIndex( void )
+{
+	static int nextIndex = 0;
+	return nextIndex++;
+}
+
 // Constructors
 
 Account::Account( void )
-	: _accountIndex(_nbAccounts), _amount(0), _nbDeposits(0), _nbWithdrawals(0)
+	: _accountIndex(getNextIndex()), _amount(0), _nbDeposits(0), _nbWithdrawals(0)
 {
 	_nbAccounts++;
 }
 
 Account::Account( int initial_deposit )
-	: _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0)
+	: _accountIndex(getNextIndex()), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0)
 {
 	_nbAccounts++;
 	_totalAmount += _amount;
@@ -111,7 +120,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 		<< " index:" << _accountIndex
 		<< ";p_amount:" << _amount
 		<< ";withdrawal:";
-	if (withdrawal > _amount)
+	if (withdrawal > checkAmount())
 	{
 		std::cout << "refused\n";
 		return (false);
@@ -127,10 +136,10 @@ bool	Account::makeWithdrawal( int withdrawal )
 	return (true);
 }
 
-/* Don't know what this is used for
 int		Account::checkAmount( void ) const
 {
-}*/
+	return (_amount);
+}
 
 void	Account::displayStatus( void ) const
 {
