@@ -3,6 +3,7 @@ megaphone
 phonebook
 run_tests
 zombie_test
+ptr_test
 
 ## Editor
 .vscode/
