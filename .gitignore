@@ -2,8 +2,10 @@
 megaphone
 phonebook
 run_tests
-zombie_test
-ptr_test
+ex00
+ex01
+ex02
+ex03
 
 ## Editor
 .vscode/

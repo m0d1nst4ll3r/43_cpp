@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 16:45:41 by rapohlen          #+#    #+#              #
-#    Updated: 2026/04/17 21:14:14 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/04/18 09:10:47 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJ			= $(SRC:%.cpp=$(BUILDDIR)/%.o)
 DEP			= $(OBJ:.o=.d)
 
 # Output binary
-NAME		= ptr_test
+NAME		= ex02
 
 # Compiler settings
 CC			= c++
