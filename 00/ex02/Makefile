@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 16:45:41 by rapohlen          #+#    #+#              #
-#    Updated: 2026/04/16 21:52:57 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/04/18 09:15:51 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJ			= $(SRC:%.cpp=$(BUILDDIR)/%.o)
 DEP			= $(OBJ:.o=.d)
 
 # Output binary
-NAME		= run_tests
+NAME		= a.out
 
 # Compiler settings
 CC			= c++
