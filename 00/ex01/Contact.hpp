@@ -1,5 +1,5 @@
-#ifndef __CONTACT_H__
-#define __CONTACT_H__
+#ifndef CONTACT_H
+#define CONTACT_H
 
 #include <string>
 
@@ -27,4 +27,4 @@ class Contact {
 
 };
 
-#endif /* __CONTACT_H__ */
+#endif /* CONTACT_H */

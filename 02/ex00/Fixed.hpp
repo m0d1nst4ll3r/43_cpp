@@ -1,5 +1,5 @@
-#ifndef __FIXED_H__
-#define __FIXED_H__
+#ifndef FIXED_H
+#define FIXED_H
 
 class Fixed {
 
@@ -22,4 +22,4 @@ class Fixed {
 
 };
 
-#endif /* __FIXED_H__ */
+#endif /* FIXED_H */

@@ -1,5 +1,5 @@
-#ifndef __HUMANB_H__
-#define __HUMANB_H__
+#ifndef HUMANB_H
+#define HUMANB_H
 
 #include "Weapon.hpp"
 #include <string>
@@ -23,4 +23,4 @@ class HumanB {
 
 };
 
-#endif /* __HUMANB_H__ */
+#endif /* HUMANB_H */

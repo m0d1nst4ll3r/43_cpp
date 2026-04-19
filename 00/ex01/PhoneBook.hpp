@@ -1,5 +1,5 @@
-#ifndef __PHONEBOOK_H__
-#define __PHONEBOOK_H__
+#ifndef PHONEBOOK_H
+#define PHONEBOOK_H
 #include "Contact.hpp"
 
 class PhoneBook {
@@ -21,4 +21,4 @@ class PhoneBook {
 
 };
 
-#endif /* __PHONEBOOK_H__ */
+#endif /* PHONEBOOK_H */

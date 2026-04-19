@@ -1,5 +1,5 @@
-#ifndef __WEAPON_H__
-#define __WEAPON_H__
+#ifndef WEAPON_H
+#define WEAPON_H
 
 #include <string>
 
@@ -20,4 +20,4 @@ class Weapon {
 
 };
 
-#endif /* __WEAPON_H__ */
+#endif /* WEAPON_H */

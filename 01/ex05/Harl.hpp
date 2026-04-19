@@ -1,5 +1,5 @@
-#ifndef __HARL_H__
-#define __HARL_H__
+#ifndef HARL_H
+#define HARL_H
 
 #include <string>
 
@@ -25,4 +25,4 @@ class Harl {
 
 };
 
-#endif /* __HARL_H__ */
+#endif /* HARL_H */
