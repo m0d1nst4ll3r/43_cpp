@@ -37,24 +37,32 @@ Fixed&	Fixed::operator=( const Fixed& op )
 	return *this;
 }
 
-Fixed	Fixed::operator+( const Fixed& op )
+Fixed	Fixed::operator+( const Fixed& op ) const
 {
-	return _value + op._value;
+	Fixed	tmp(*this);
+	tmp._value += op._value;
+	return tmp;
 }
 
-Fixed	Fixed::operator-( const Fixed& op )
+Fixed	Fixed::operator-( const Fixed& op ) const
 {
-	return _value - op._value;
+	Fixed	tmp(*this);
+	tmp._value -= op._value;
+	return tmp;
 }
 
-Fixed	Fixed::operator*( const Fixed& op )
+Fixed	Fixed::operator*( const Fixed& op ) const
 {
-	return _value * op._value;
+	Fixed	tmp;
+	tmp._value = static_cast<int>((static_cast<long long>(_value) * static_cast<long long>(op._value)) >> _position);
+	return tmp;
 }
 
-Fixed	Fixed::operator/( const Fixed& op )
+Fixed	Fixed::operator/( const Fixed& op ) const
 {
-	return _value / op._value;
+	Fixed	tmp;
+	tmp._value = static_cast<int>((static_cast<long long>(_value) << _position) / op._value);
+	return tmp;
 }
 
 Fixed&	Fixed::operator++( void )
@@ -89,31 +97,35 @@ std::ostream&	operator<<( std::ostream& out, const Fixed& op )
 	return out;
 }
 
-bool	Fixed::operator==( const Fixed& op )
+bool	Fixed::operator==( const Fixed& op ) const
 {
 	return _value == op._value;
 }
 
-bool	Fixed::operator<( const Fixed& op )
+bool	Fixed::operator!=( const Fixed& op ) const
+{
+	return _value != op._value;
+}
+
+bool	Fixed::operator<( const Fixed& op ) const
 {
 	return _value < op._value;
 }
 
-bool	Fixed::operator>( const Fixed& op )
+bool	Fixed::operator>( const Fixed& op ) const
 {
 	return _value > op._value;
 }
 
-bool	Fixed::operator<=( const Fixed& op )
+bool	Fixed::operator<=( const Fixed& op ) const
 {
 	return _value <= op._value;
 }
 
-bool	Fixed::operator>=( const Fixed& op )
+bool	Fixed::operator>=( const Fixed& op ) const
 {
 	return _value >= op._value;
 }
-
 
 int		Fixed::getRawBits( void ) const
 {
