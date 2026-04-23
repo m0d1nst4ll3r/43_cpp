@@ -9,9 +9,9 @@ class Fixed {
 	public:
 
 	Fixed( void );
-	Fixed( const Fixed& copy );
 	Fixed( int n );
 	Fixed( float f );
+	Fixed( const Fixed& copy );
 	~Fixed( void );
 
 	Fixed&	operator=( const Fixed& op );

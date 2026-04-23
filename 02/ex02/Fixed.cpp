@@ -1,68 +1,31 @@
 #include "Fixed.hpp"
 #include <iostream>
 #include <cmath>
+#include <stdexcept>
 
 const int	Fixed::_position = 8;
 
-Fixed::Fixed( void ) : _value(0)
-{
-	std::cerr << "Default constructor called\n";
-}
+Fixed::Fixed( void ) : _value(0) {}
 
-Fixed::~Fixed( void )
-{
-	std::cerr << "Destructor called\n";
-}
+Fixed::Fixed( int n ) : _value(n << _position) {}
 
-Fixed::Fixed( const Fixed& copy ) : _value(copy._value)
-{
-	std::cerr << "Copy constructor called\n";
-}
+Fixed::Fixed( float f ) : _value(static_cast<int>(roundf(f * (1 << _position)))) {}
 
-Fixed::Fixed( int n ) : _value(n << _position)
-{
-	std::cerr << "Int constructor called\n";
-}
+Fixed::Fixed( const Fixed& copy ) : _value(copy._value) {}
 
-Fixed::Fixed( float f ) : _value(static_cast<int>(roundf(f * (1 << _position))))
+Fixed::~Fixed( void ) {}
+
+std::ostream&	operator<<( std::ostream& out, const Fixed& op )
 {
-	std::cerr << "Float constructor called\n";
+	out << op.toFloat();
+	return out;
 }
 
 Fixed&	Fixed::operator=( const Fixed& op )
 {
-	std::cerr << "Copy assignment operator called\n";
 	if (this != &op)
 		_value = op._value;
 	return *this;
-}
-
-Fixed	Fixed::operator+( const Fixed& op ) const
-{
-	Fixed	tmp(*this);
-	tmp._value += op._value;
-	return tmp;
-}
-
-Fixed	Fixed::operator-( const Fixed& op ) const
-{
-	Fixed	tmp(*this);
-	tmp._value -= op._value;
-	return tmp;
-}
-
-Fixed	Fixed::operator*( const Fixed& op ) const
-{
-	Fixed	tmp;
-	tmp._value = static_cast<int>((static_cast<long long>(_value) * static_cast<long long>(op._value)) >> _position);
-	return tmp;
-}
-
-Fixed	Fixed::operator/( const Fixed& op ) const
-{
-	Fixed	tmp;
-	tmp._value = static_cast<int>((static_cast<long long>(_value) << _position) / op._value);
-	return tmp;
 }
 
 Fixed&	Fixed::operator++( void )
@@ -91,10 +54,38 @@ Fixed	Fixed::operator--( int )
 	return tmp;
 }
 
-std::ostream&	operator<<( std::ostream& out, const Fixed& op )
+Fixed	Fixed::operator+( const Fixed& op ) const
 {
-	out << op.toFloat();
-	return out;
+	Fixed	tmp;
+	tmp._value = _value + op._value;
+	return tmp;
+}
+
+Fixed	Fixed::operator-( const Fixed& op ) const
+{
+	Fixed	tmp;
+	tmp._value = _value - op._value;
+	return tmp;
+}
+
+Fixed	Fixed::operator*( const Fixed& op ) const
+{
+	Fixed	tmp;
+	tmp._value = static_cast<int>(
+			(static_cast<long long>(_value) * static_cast<long long>(op._value)) >> _position
+			);
+	return tmp;
+}
+
+Fixed	Fixed::operator/( const Fixed& op ) const
+{
+	if (op._value == 0)
+		throw std::domain_error("Fixed: division by zero");
+	Fixed	tmp;
+	tmp._value = static_cast<int>(
+			(static_cast<long long>(_value) << _position) / op._value
+			);
+	return tmp;
 }
 
 bool	Fixed::operator==( const Fixed& op ) const
@@ -129,13 +120,11 @@ bool	Fixed::operator>=( const Fixed& op ) const
 
 int		Fixed::getRawBits( void ) const
 {
-	std::cerr << "getRawBits member function called\n";
 	return (_value);
 }
 
 void	Fixed::setRawBits( const int raw )
 {
-	std::cerr << "setRawBits member function called\n";
 	_value = raw;
 }
 

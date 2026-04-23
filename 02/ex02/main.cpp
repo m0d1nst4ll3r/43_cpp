@@ -52,5 +52,13 @@ int	main( void )
 	std::cout << (Fixed(-1) <= Fixed(-1)) << '\n';
 	std::cout << (Fixed(-2) >= Fixed(-1)) << '\n';
 
+	Fixed c = 3.56f;
+	std::cout << c << '\n';
+
+	try { std::cout << Fixed(1) / Fixed(0) << '\n'; }
+	catch (...)	{ std::cout << "Exception caught\n"; }
+
+	std::cout << "Reached end of tests\n";
+
 	return 0;
 }
