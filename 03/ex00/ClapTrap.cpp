@@ -40,7 +40,10 @@ void	ClapTrap::attack( const std::string& target )
 		std::cout << "ClapTrap " << _name
 			<< " attacks " << target
 			<< ", causing " << _dmg
-			<< " points of damage!\n";
+			<< " points of damage!";
+		if (_dmg == 0)
+			std::cout << " Lame.";
+		std::cout << '\n';
 	}
 	else
 		std::cout << "ClapTrap " << _name << " has no energy to attack!\n";
