@@ -4,24 +4,24 @@
 
 ClapTrap::ClapTrap( void ) : _name("Default"), _hp(10), _ep(10), _dmg(0)
 {
-	std::cerr << "Default constructor called\n";
+	std::cerr << "ClapTrap: Default constructor called\n";
 }
 
 ClapTrap::ClapTrap( const std::string& name ) : _name(name), _hp(10), _ep(10), _dmg(0)
 {
-	std::cerr << "Name constructor called\n";
+	std::cerr << "ClapTrap: Name constructor called\n";
 }
 
-ClapTrap::ClapTrap( const ClapTrap& toCopy ) : _name(toCopy._name), _hp(10), _ep(10), _dmg(0)
+ClapTrap::ClapTrap( const ClapTrap& toCopy ) : _name(toCopy._name), _hp(toCopy._hp), _ep(toCopy._ep), _dmg(toCopy._dmg)
 {
-	std::cerr << "Copy constructor called\n";
+	std::cerr << "ClapTrap: Copy constructor called\n";
 }
 
-ClapTrap::~ClapTrap( void ) { std::cerr << "Destructor called\n"; }
+ClapTrap::~ClapTrap( void ) { std::cerr << "ClapTrap: Destructor called\n"; }
 
 ClapTrap&	ClapTrap::operator=( const ClapTrap& op )
 {
-	std::cerr << "Copy assignment operator overload called\n";
+	std::cerr << "ClapTrap: Copy assignment operator overload called\n";
 	if (this != &op)
 	{
 		_name = op._name;
