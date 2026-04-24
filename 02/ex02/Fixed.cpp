@@ -5,8 +5,6 @@
 
 const int	Fixed::_position = 8;
 
-Fixed::Fixed( void ) : _value(0) {}
-
 Fixed::Fixed( int n ) : _value(n << _position) {}
 
 Fixed::Fixed( float f ) : _value(static_cast<int>(roundf(f * (1 << _position)))) {}

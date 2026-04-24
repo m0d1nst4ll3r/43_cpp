@@ -8,9 +8,8 @@ class Fixed {
 
 	public:
 
-	Fixed( void );
 	Fixed( const Fixed& copy );
-	Fixed( int n );
+	Fixed( int n = 0 );
 	Fixed( float f );
 	~Fixed( void );
 

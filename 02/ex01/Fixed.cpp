@@ -4,11 +4,6 @@
 
 const int	Fixed::_position = 8;
 
-Fixed::Fixed( void ) : _value(0)
-{
-	std::cerr << "Default constructor called\n";
-}
-
 Fixed::~Fixed( void )
 {
 	std::cerr << "Destructor called\n";
