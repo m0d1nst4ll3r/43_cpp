@@ -3,21 +3,12 @@
 #include <iostream>
 #include <string>
 
-ScavTrap::ScavTrap( void ) : ClapTrap("Default", "ScavTrap")
+ScavTrap::ScavTrap( const std::string& name ) : ClapTrap(name)
 {
-	std::cerr << "ScavTrap: Default constructor called\n";
-	this->setHp(100);
-	this->setEp(50);
-	this->setDmg(20);
-	_guarding = false;
-}
-
-ScavTrap::ScavTrap( const std::string& name ) : ClapTrap(name, "ScavTrap")
-{
-	std::cerr << "ScavTrap: Name constructor called\n";
-	this->setHp(100);
-	this->setEp(50);
-	this->setDmg(20);
+	std::cerr << "ScavTrap: Constructor called\n";
+	_hp = 100;
+	_ep = 50;
+	_dmg = 20;
 	_guarding = false;
 }
 
@@ -45,8 +36,25 @@ void	ScavTrap::guardGate( void )
 	if (!_guarding)
 	{
 		_guarding = true;
-		std::cout << "ScavTrap " << this->getName() << " just entered Gate Keeper mode!\n";
+		std::cout << _name << " just entered Gate Keeper mode!\n";
 	}
 	else
-		std::cout << "ScavTrap " << this->getName() << " is valiantly guarding the gate\n";
+		std::cout << _name << " is valiantly guarding the gate\n";
+}
+
+void	ScavTrap::attack( const std::string& target )
+{
+	if (_ep > 0)
+	{
+		_ep--;
+		std::cout << _name
+			<< " dropkicks " << target
+			<< " in a spectacular fashion, causing " << _dmg
+			<< " points of damage!";
+		if (_dmg == 0)
+			std::cout << " Lame.";
+		std::cout << '\n';
+	}
+	else
+		std::cout << _name << "'s all outta juice\n";
 }

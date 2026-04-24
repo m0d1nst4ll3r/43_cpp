@@ -8,9 +8,7 @@ class ClapTrap {
 
 	public:
 
-	ClapTrap( void );
-	ClapTrap( const std::string& name );
-	ClapTrap( const std::string& name, const std::string& typeName );
+	ClapTrap( const std::string& name = "Default" );
 	ClapTrap( const ClapTrap& toCopy );
 	virtual ~ClapTrap( void );
 
@@ -20,19 +18,8 @@ class ClapTrap {
 	void	takeDamage( unsigned int amount );
 	void	beRepaired( unsigned int amount );
 
-	std::string		getName( void ) const;
-	unsigned int	getHp( void ) const;
-	unsigned int	getEp( void ) const;
-	unsigned int	getDmg( void ) const;
+	protected:
 
-	void	setName( const std::string& name );
-	void	setHp( unsigned int amount );
-	void	setEp( unsigned int amount );
-	void	setDmg( unsigned int amount );
-
-	private:
-
-	std::string			_typeName;
 	std::string			_name;
 	unsigned int		_hp;
 	unsigned int		_ep;

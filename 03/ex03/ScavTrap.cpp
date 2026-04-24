@@ -36,10 +36,10 @@ void	ScavTrap::guardGate( void )
 	if (!_guarding)
 	{
 		_guarding = true;
-		std::cout << "ScavTrap " << _name << " just entered Gate Keeper mode!\n";
+		std::cout << _name << " just entered Gate Keeper mode!\n";
 	}
 	else
-		std::cout << "ScavTrap " << _name << " is valiantly guarding the gate\n";
+		std::cout << _name << " is valiantly guarding the gate\n";
 }
 
 void	ScavTrap::attack( const std::string& target )
@@ -47,14 +47,14 @@ void	ScavTrap::attack( const std::string& target )
 	if (_ep > 0)
 	{
 		_ep--;
-		std::cout << "ScavTrap " << _name
-			<< " attacks " << target
-			<< ", causing " << _dmg
+		std::cout << _name
+			<< " dropkicks " << target
+			<< " in a spectacular fashion, causing " << _dmg
 			<< " points of damage!";
 		if (_dmg == 0)
 			std::cout << " Lame.";
 		std::cout << '\n';
 	}
 	else
-		std::cout << "ScavTrap " << _name << " has no energy to attack!\n";
+		std::cout << _name << "'s all outta juice\n";
 }

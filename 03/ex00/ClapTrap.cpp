@@ -32,7 +32,7 @@ void	ClapTrap::attack( const std::string& target )
 	if (_ep > 0)
 	{
 		_ep--;
-		std::cout << "ClapTrap " << _name
+		std::cout << _name
 			<< " attacks " << target
 			<< ", causing " << _dmg
 			<< " points of damage!";
@@ -41,14 +41,14 @@ void	ClapTrap::attack( const std::string& target )
 		std::cout << '\n';
 	}
 	else
-		std::cout << "ClapTrap " << _name << " has no energy to attack!\n";
+		std::cout << _name << " has no energy to attack!\n";
 }
 
 void	ClapTrap::takeDamage( unsigned int amount )
 {
 	if (_hp > 0)
 	{
-		std::cout << "ClapTrap " << _name << " took ";
+		std::cout << _name << " took ";
 		if (amount >= _hp)
 		{
 			std::cout << _hp << " points of damage and is down!\n";
@@ -58,12 +58,16 @@ void	ClapTrap::takeDamage( unsigned int amount )
 		{
 			_hp -= amount;
 			std::cout << amount << " points of damage and has "
-				<< _hp << " remaining hit points. Ouch!\n";
+				<< _hp << " remaining hit points. ";
+			if (!amount)
+				std::cout << "Phew!\n";
+			else
+				std::cout << "Ouch!\n";
 		}
 	}
 	else
-		std::cout << "ClapTrap " << _name
-			<< " is already down. No use beating a dead horse!\n";
+		std::cout << _name
+			<< " is already down. No use beating a dead bot!\n";
 }
 
 void	ClapTrap::beRepaired( unsigned int amount )
@@ -72,11 +76,11 @@ void	ClapTrap::beRepaired( unsigned int amount )
 	{
 		_ep--;
 		_hp += amount;
-		std::cout << "ClapTrap " << _name
+		std::cout << _name
 			<< " repaired " << amount
 			<< " hitpoints and has " << _hp
 			<< " remaining!\n";
 	}
 	else
-		std::cout << "ClapTrap " << _name << " has no energy to repair!\n";
+		std::cout << _name << " has no energy to repair!\n";
 }

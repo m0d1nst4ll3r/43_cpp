@@ -12,6 +12,7 @@ int	main( void )
 		ClapTrap	joe("Joe");
 
 		joe.attack("Bill");
+		joe.takeDamage(0);
 		joe.takeDamage(4);
 		joe.takeDamage(4);
 		joe.takeDamage(4);
@@ -22,18 +23,19 @@ int	main( void )
 
 	std::cout << '\n';
 
-	ScavTrap	scavy("Scavy");
+	{
+		ScavTrap	scavill("Henry Scavill");
 
-	scavy.attack("Target Dummy");
-	scavy.takeDamage(5);
-	scavy.takeDamage(50);
-	scavy.takeDamage(50);
-	scavy.beRepaired(150);
-	scavy.guardGate();
+		scavill.attack("Target Dummy");
+		scavill.takeDamage(5);
+		scavill.takeDamage(50);
+		scavill.takeDamage(50);
+		scavill.beRepaired(150);
+		scavill.guardGate();
 
-	ScavTrap	henryScavill;
-	henryScavill = scavy;
-	henryScavill.setName("Scavill");
-	henryScavill.takeDamage(100);
-	henryScavill.guardGate();
+		ScavTrap	scavy;
+		scavy = scavill;
+		scavy.takeDamage(100);
+		scavy.guardGate();
+	}
 }
