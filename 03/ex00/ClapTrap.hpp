@@ -8,8 +8,7 @@ class ClapTrap {
 
 	public:
 
-	ClapTrap( void );
-	ClapTrap( const std::string& name );
+	ClapTrap( const std::string& name = "Default" );
 	ClapTrap( const ClapTrap& toCopy );
 	~ClapTrap( void );
 

@@ -2,11 +2,6 @@
 #include <iostream>
 #include <string>
 
-ClapTrap::ClapTrap( void ) : _name("Default"), _hp(10), _ep(10), _dmg(0)
-{
-	std::cerr << "ClapTrap: Default constructor called\n";
-}
-
 ClapTrap::ClapTrap( const std::string& name ) : _name(name), _hp(10), _ep(10), _dmg(0)
 {
 	std::cerr << "ClapTrap: Name constructor called\n";
