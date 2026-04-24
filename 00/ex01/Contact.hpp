@@ -7,8 +7,11 @@ class Contact {
 
 
 	public:
-	Contact();
-	Contact(const std::string& firstName, const std::string& lastName, const std::string& nickName, const std::string& phoneNumber, const std::string& darkestSecret);
+	Contact(const std::string& firstName = "",
+			const std::string& lastName = "",
+			const std::string& nickName = "",
+			const std::string& phoneNumber = "",
+			const std::string& darkestSecret = "");
 
 	const std::string&	getFirstName() const;
 	const std::string&	getLastName() const;
