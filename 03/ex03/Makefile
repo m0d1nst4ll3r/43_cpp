@@ -6,7 +6,7 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 16:45:41 by rapohlen          #+#    #+#              #
-#    Updated: 2026/04/24 17:34:39 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/04/24 18:37:00 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 CFILES		= main.cpp \
 			  ClapTrap.cpp \
 			  ScavTrap.cpp \
-			  FragTrap.cpp
+			  FragTrap.cpp \
+			  DiamondTrap.cpp
 SRCDIR		= .
 SRC			= $(addprefix $(SRCDIR)/, $(CFILES))
 
@@ -33,7 +34,7 @@ NAME		= a.out
 
 # Compiler settings
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98 -MMD -MP $(addprefix -I,$(INCDIR))
+CFLAGS		= -Wall -Wextra -Werror -Wshadow -std=c++98 -MMD -MP $(addprefix -I,$(INCDIR))
 
 # Make settings
 MAKEFLAGS	+= --no-print-directory
