@@ -1,6 +1,7 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 ClapTrap::ClapTrap( const std::string& name ) : _name(name), _hp(10), _ep(10), _dmg(0)
 {
@@ -58,12 +59,33 @@ void	ClapTrap::takeDamage( unsigned int amount )
 		{
 			_hp -= amount;
 			std::cout << amount << " points of damage and has "
-				<< _hp << " remaining hit points. Ouch!\n";
+				<< _hp << " remaining hit points. ";
+			int rand = std::rand() % 6;
+			switch (rand)
+			{
+				case 0:
+					std::cout << "Ouch!\n";
+					break;
+				case 1:
+					std::cout << "Oof!\n";
+					break;
+				case 2:
+					std::cout << "Wham!\n";
+					break;
+				case 3:
+					std::cout << "Blam!\n";
+					break;
+				case 4:
+					std::cout << "Fzzt!\n";
+					break;
+				default:
+					std::cout << "Bzzt!\n";
+			}
 		}
 	}
 	else
 		std::cout << "ClapTrap " << _name
-			<< " is already down. No use beating a dead horse!\n";
+			<< " is already down. No use beating a dead bot!\n";
 }
 
 void	ClapTrap::beRepaired( unsigned int amount )
