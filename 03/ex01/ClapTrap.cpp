@@ -3,6 +3,13 @@
 #include <string>
 #include <cstdlib>
 
+namespace {
+	std::string	getS( unsigned int n )
+	{
+		return n != 1 ? "s" : "";
+	}
+}
+
 ClapTrap::ClapTrap( const std::string& name ) : _name(name), _hp(10), _ep(10), _dmg(0)
 {
 	std::cerr << "ClapTrap: Constructor called\n";
@@ -36,7 +43,7 @@ void	ClapTrap::attack( const std::string& target )
 		std::cout << _name
 			<< " attacks " << target
 			<< ", causing " << _dmg
-			<< " points of damage!";
+			<< " point" << getS(_dmg) << " of damage!";
 		if (_dmg == 0)
 			std::cout << " Lame.";
 		std::cout << '\n';
@@ -52,14 +59,14 @@ void	ClapTrap::takeDamage( unsigned int amount )
 		std::cout << _name << " took ";
 		if (amount >= _hp)
 		{
-			std::cout << _hp << " points of damage and is down!\n";
+			std::cout << _hp << " point" << getS(_hp) << " of damage and is down!\n";
 			_hp = 0;
 		}
 		else
 		{
 			_hp -= amount;
-			std::cout << amount << " points of damage and has "
-				<< _hp << " remaining hit points. ";
+			std::cout << amount << " point" << getS(amount) << " of damage and has "
+				<< _hp << " remaining hit point" << getS(_hp) << ". ";
 			if (!amount)
 				std::cout << "Phew!\n";
 			else
@@ -101,7 +108,7 @@ void	ClapTrap::beRepaired( unsigned int amount )
 		_hp += amount;
 		std::cout << _name
 			<< " repaired " << amount
-			<< " hitpoints and has " << _hp
+			<< " hitpoint" << getS(amount) << " and has " << _hp
 			<< " remaining!\n";
 	}
 	else

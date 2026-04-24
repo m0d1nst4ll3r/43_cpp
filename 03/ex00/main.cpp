@@ -6,6 +6,7 @@ int	main( void )
 
 	joe.attack("Bill");
 	joe.takeDamage(0);
+	joe.takeDamage(1);
 	joe.takeDamage(4);
 	joe.takeDamage(4);
 	joe.takeDamage(4);
