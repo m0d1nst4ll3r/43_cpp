@@ -5,16 +5,15 @@
 #include <iostream>
 #include <string>
 
-DiamondTrap::DiamondTrap( const std::string& name ) : ClapTrap(name + "_clap_name")
+DiamondTrap::DiamondTrap( const std::string& name ) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name), _name(name)
 {
 	std::cerr << "DiamondTrap: Constructor called\n";
-	_name = name;
 	_hp = 100;
 	_ep = 50;
 	_dmg = 30;
 }
 
-DiamondTrap::DiamondTrap( const DiamondTrap& toCopy ) : ClapTrap(toCopy), ScavTrap(toCopy), FragTrap(toCopy)
+DiamondTrap::DiamondTrap( const DiamondTrap& toCopy ) : ClapTrap(toCopy), ScavTrap(toCopy), FragTrap(toCopy), _name(toCopy._name)
 {
 	std::cerr << "DiamondTrap: Copy constructor called\n";
 }
@@ -25,7 +24,10 @@ DiamondTrap&	DiamondTrap::operator=( const DiamondTrap& op )
 {
 	std::cerr << "DiamondTrap: Copy assignment operator overload called\n";
 	if (this != &op)
+	{
 		ScavTrap::operator=(op);
+		_name = op._name;
+	}
 	return *this;
 }
 
