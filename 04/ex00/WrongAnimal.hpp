@@ -9,6 +9,8 @@ class WrongAnimal {
 
 	WrongAnimal( void );
 	virtual ~WrongAnimal( void );
+	WrongAnimal( const WrongAnimal& toCopy );
+	WrongAnimal&	operator=( const WrongAnimal& op );
 
 	std::string	getType( void ) const;
 

@@ -6,6 +6,19 @@ WrongAnimal::WrongAnimal( void ) : type("WrongAnimal") { std::cerr << "WrongAnim
 
 WrongAnimal::~WrongAnimal( void ) { std::cerr << "WrongAnimal destructed\n"; }
 
+WrongAnimal::WrongAnimal( const WrongAnimal& toCopy )
+{
+	(void)toCopy;
+	std::cerr << "WrongAnimal copied\n";
+}
+
+WrongAnimal&	WrongAnimal::operator=( const WrongAnimal& op )
+{
+	(void)op;
+	std::cerr << "WrongAnimal assigned\n";
+	return (*this);
+}
+
 std::string	WrongAnimal::getType( void ) const { return type; }
 
 void	WrongAnimal::makeSound( void ) const

@@ -10,6 +10,8 @@ class WrongCat : public WrongAnimal {
 
 	WrongCat( void );
 	virtual ~WrongCat( void );
+	WrongCat( const WrongCat& toCopy );
+	WrongCat&	operator=( const WrongCat& op );
 
 	void	makeSound( void ) const;
 

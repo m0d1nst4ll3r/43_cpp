@@ -15,3 +15,16 @@ void	Dog::makeSound( void ) const
 {
 	std::cout << "Dog barks\n";
 }
+
+Dog::Dog( const Dog& toCopy )
+{
+	(void)toCopy;
+	std::cerr << "Dog copied\n";
+}
+
+Dog&	Dog::operator=( const Dog& op )
+{
+	(void)op;
+	std::cerr << "Dog assigned\n";
+	return (*this);
+}

@@ -15,3 +15,16 @@ void	Cat::makeSound( void ) const
 {
 	std::cout << "Cat meows\n";
 }
+
+Cat::Cat( const Cat& toCopy )
+{
+	(void)toCopy;
+	std::cerr << "Cat copied\n";
+}
+
+Cat&	Cat::operator=( const Cat& op )
+{
+	(void)op;
+	std::cerr << "Cat assigned\n";
+	return (*this);
+}
