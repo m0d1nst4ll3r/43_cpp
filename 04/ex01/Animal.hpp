@@ -10,7 +10,7 @@ class Animal {
 	Animal( void );
 	virtual ~Animal( void );
 	Animal( const Animal& toCopy );
-	Animal&	operator=( const Animal& op );
+	virtual Animal&	operator=( const Animal& op );
 
 	std::string	getType( void ) const;
 

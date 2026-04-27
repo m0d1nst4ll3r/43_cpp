@@ -12,7 +12,7 @@ class Dog : public Animal {
 	Dog( void );
 	virtual ~Dog( void );
 	Dog( const Dog& toCopy );
-	Dog&	operator=( const Dog& op );
+	virtual Dog&	operator=( const Dog& op );
 
 	virtual void	makeSound( void ) const;
 

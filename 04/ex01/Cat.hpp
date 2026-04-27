@@ -12,7 +12,7 @@ class Cat : public Animal {
 	Cat( void );
 	virtual ~Cat( void );
 	Cat( const Cat& toCopy );
-	Cat&	operator=( const Cat& op );
+	virtual Cat&	operator=( const Cat& op );
 
 	virtual void	makeSound( void ) const;
 

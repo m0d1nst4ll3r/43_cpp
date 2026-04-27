@@ -17,20 +17,21 @@ Dog::~Dog( void )
 	std::cerr << "Dog destructed\n";
 }
 
-void	Dog::makeSound( void ) const
+Dog::Dog( const Dog& toCopy ) : Animal(toCopy)
 {
-	std::cout << "Dog barks\n";
-}
-
-Dog::Dog( const Dog& toCopy )
-{
-	(void)toCopy;
 	std::cerr << "Dog copied\n";
+	brain = toCopy.brain;
 }
 
 Dog&	Dog::operator=( const Dog& op )
 {
-	(void)op;
 	std::cerr << "Dog assigned\n";
+	if (this != &op)
+		brain = op.brain;
 	return (*this);
+}
+
+void	Dog::makeSound( void ) const
+{
+	std::cout << "Dog barks\n";
 }

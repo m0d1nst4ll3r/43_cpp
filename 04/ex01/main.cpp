@@ -19,6 +19,16 @@ int	main( void )
 
 	std::cout << '\n';
 
+	Animal* animArr2[4];
+
 	for (int i = 0; i < 4; ++i)
+		animArr2[i] = new Animal(*animArr[i]);
+
+	std::cout << '\n';
+
+	for (int i = 0; i < 4; ++i)
+	{
+		delete animArr2[i];
 		delete animArr[i];
+	}
 }
