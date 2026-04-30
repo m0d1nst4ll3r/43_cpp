@@ -25,3 +25,8 @@ void	Animal::makeSound( void ) const
 {
 	std::cout << "Animal makes a noise\n";
 }
+
+Animal*	Animal::clone( void ) const
+{
+	return new Animal(*this);
+}

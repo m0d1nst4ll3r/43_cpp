@@ -4,11 +4,10 @@
 #include <string>
 #include <iostream>
 
-Cat::Cat( void ) : Animal()
+Cat::Cat( void ) : Animal(), brain(new Brain())
 {
 	std::cerr << "Cat constructed\n";
 	type = "Cat";
-	brain = new Brain();
 }
 
 Cat::~Cat( void )
@@ -17,10 +16,9 @@ Cat::~Cat( void )
 	std::cerr << "Cat destructed\n";
 }
 
-Cat::Cat( const Cat& toCopy ) : Animal(toCopy)
+Cat::Cat( const Cat& toCopy ) : Animal(toCopy), brain(new Brain(*toCopy.brain))
 {
 	std::cerr << "Cat copied\n";
-	brain = toCopy.brain;
 }
 
 Cat&	Cat::operator=( const Cat& op )
@@ -34,4 +32,9 @@ Cat&	Cat::operator=( const Cat& op )
 void	Cat::makeSound( void ) const
 {
 	std::cout << "Cat meows\n";
+}
+
+Cat*	Cat::clone( void ) const
+{
+	return new Cat(*this);
 }

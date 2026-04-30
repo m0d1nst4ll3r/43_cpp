@@ -14,6 +14,8 @@ class Cat : public Animal {
 	Cat( const Cat& toCopy );
 	virtual Cat&	operator=( const Cat& op );
 
+	virtual Cat*	clone( void ) const;
+
 	virtual void	makeSound( void ) const;
 
 	private:

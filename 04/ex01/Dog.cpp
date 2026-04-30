@@ -4,11 +4,10 @@
 #include <string>
 #include <iostream>
 
-Dog::Dog( void ) : Animal()
+Dog::Dog( void ) : Animal(), brain(new Brain())
 {
 	std::cerr << "Dog constructed\n";
 	type = "Dog";
-	brain = new Brain();
 }
 
 Dog::~Dog( void )
@@ -17,10 +16,9 @@ Dog::~Dog( void )
 	std::cerr << "Dog destructed\n";
 }
 
-Dog::Dog( const Dog& toCopy ) : Animal(toCopy)
+Dog::Dog( const Dog& toCopy ) : Animal(toCopy), brain(new Brain(*toCopy.brain))
 {
 	std::cerr << "Dog copied\n";
-	brain = toCopy.brain;
 }
 
 Dog&	Dog::operator=( const Dog& op )
@@ -34,4 +32,9 @@ Dog&	Dog::operator=( const Dog& op )
 void	Dog::makeSound( void ) const
 {
 	std::cout << "Dog barks\n";
+}
+
+Dog*	Dog::clone( void ) const
+{
+	return new Dog(*this);
 }

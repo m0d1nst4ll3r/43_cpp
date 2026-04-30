@@ -22,7 +22,9 @@ int	main( void )
 	Animal* animArr2[4];
 
 	for (int i = 0; i < 4; ++i)
-		animArr2[i] = new Animal(*animArr[i]);
+	{
+		animArr2[i] = animArr[i]->clone();
+	}
 
 	std::cout << '\n';
 
