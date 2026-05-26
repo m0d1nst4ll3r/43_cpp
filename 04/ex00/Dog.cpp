@@ -16,7 +16,7 @@ void	Dog::makeSound( void ) const
 	std::cout << "Dog barks\n";
 }
 
-Dog::Dog( const Dog& toCopy ) : Animal(toCopy)
+Dog::Dog( const Dog& toCopy )
 {
 	(void)toCopy;
 	std::cerr << "Dog copied\n";

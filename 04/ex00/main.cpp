@@ -27,7 +27,7 @@ int	main( void )
 	std::cout << "\nWrongCat as WrongCat:\n\n";
 
 	{
-		const WrongCat		cat;
+		WrongCat		cat;
 		std::cout << cat.getType() << '\n';
 		cat.makeSound();
 	}
