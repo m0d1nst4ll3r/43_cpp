@@ -11,7 +11,7 @@ WrongCat::WrongCat( void ) : WrongAnimal()
 
 WrongCat::~WrongCat( void ) { std::cerr << "WrongCat destructed\n"; }
 
-WrongCat::WrongCat( const WrongCat& toCopy )
+WrongCat::WrongCat( const WrongCat& toCopy ) : WrongAnimal(toCopy)
 {
 	(void)toCopy;
 	std::cerr << "WrongCat copied\n";
