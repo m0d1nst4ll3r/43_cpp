@@ -44,7 +44,7 @@ void	ScavTrap::guardGate( void )
 
 void	ScavTrap::attack( const std::string& target )
 {
-	if (_ep > 0)
+	if (_ep > 0 && _hp > 0)
 	{
 		_ep--;
 		std::cout << _name
@@ -55,6 +55,8 @@ void	ScavTrap::attack( const std::string& target )
 			std::cout << " Lame.";
 		std::cout << '\n';
 	}
-	else
+	else if (_hp <= 0)
+		std::cout << _name << "'s lying face down in the dirt. He can't attack!\n";
+	else if (_ep <= 0)
 		std::cout << _name << "'s all outta juice\n";
 }

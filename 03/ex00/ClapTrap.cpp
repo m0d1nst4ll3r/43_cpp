@@ -36,7 +36,7 @@ ClapTrap&	ClapTrap::operator=( const ClapTrap& op )
 
 void	ClapTrap::attack( const std::string& target )
 {
-	if (_ep > 0)
+	if (_ep > 0 && _hp > 0)
 	{
 		_ep--;
 		std::cout << _name
@@ -47,7 +47,9 @@ void	ClapTrap::attack( const std::string& target )
 			std::cout << " Lame.";
 		std::cout << '\n';
 	}
-	else
+	else if (_hp <= 0)
+		std::cout << _name << " is down and can't do anything!\n";
+	else if (_ep <= 0)
 		std::cout << _name << " has no energy to attack!\n";
 }
 
@@ -79,7 +81,7 @@ void	ClapTrap::takeDamage( unsigned int amount )
 
 void	ClapTrap::beRepaired( unsigned int amount )
 {
-	if (_ep > 0)
+	if (_ep > 0 && _hp > 0)
 	{
 		_ep--;
 		_hp += amount;
@@ -88,6 +90,8 @@ void	ClapTrap::beRepaired( unsigned int amount )
 			<< " hitpoint" << getS(amount) << " and has " << _hp
 			<< " remaining!\n";
 	}
-	else
+	else if (_hp <= 0)
+		std::cout << _name << " is down and can't do anything!\n";
+	else if (_ep <= 0)
 		std::cout << _name << " has no energy to repair!\n";
 }
