@@ -9,8 +9,8 @@ class Character : public ICharacter {
 	public:
 		Character(const std::string& name = "Default");
 		virtual	~Character();
-		Character(Character& toCopy);
-		Character&	operator=(Character& op);
+		Character(const Character& toCopy);
+		Character&	operator=(const Character& op);
 		virtual const std::string& getName() const;
 		virtual void equip(AMateria* m);
 		virtual void unequip(int idx);
