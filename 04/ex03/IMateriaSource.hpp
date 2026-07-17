@@ -2,6 +2,7 @@
 #define IMATERIASOURCE_H
 
 #include "AMateria.hpp"
+#include <string>
 
 class IMateriaSource {
 	public:

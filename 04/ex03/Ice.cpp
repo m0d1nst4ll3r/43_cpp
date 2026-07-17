@@ -4,13 +4,8 @@
 #include <iostream>
 
 Ice::Ice() : AMateria("ice") {}
-
 Ice::~Ice() {}
-
-Ice::Ice(const Ice& toCopy)
-{
-	(void)toCopy;
-}
+Ice::Ice(const Ice& toCopy) : AMateria(toCopy) {}
 
 Ice&	Ice::operator=(const Ice& op)
 {

@@ -4,13 +4,8 @@
 #include <iostream>
 
 Cure::Cure() : AMateria("cure") {}
-
 Cure::~Cure() {}
-
-Cure::Cure(const Cure& toCopy)
-{
-	(void)toCopy;
-}
+Cure::Cure(const Cure& toCopy) : AMateria(toCopy) {}
 
 Cure&	Cure::operator=(const Cure& op)
 {
