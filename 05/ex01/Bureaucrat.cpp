@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include <string>
 #include <iostream>
 
@@ -48,11 +49,11 @@ void	Bureaucrat::demote()
 	_grade++;
 }
 
-void	signForm(Form& form) const
+void	Bureaucrat::signForm(Form& form) const
 {
 	if (form.getSigned())
 	{
-		std::cout << "Form " << form.getName() << " is already signed.\n";
+		std::cout << _name << " couldn't sign " << form.getName() << " because it is already signed.\n";
 		return ;
 	}
 	try {
@@ -61,7 +62,7 @@ void	signForm(Form& form) const
 	}
 	catch (std::exception& e)
 	{
-		std::cout << _name << " couldn't sign " << form.getName() << " because " << std::endl;
+		std::cout << _name << " couldn't sign " << form.getName() << " because their grade is not high enough.\n";
 	}
 }
 

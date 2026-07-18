@@ -6,13 +6,14 @@
 #    By: rapohlen <rapohlen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 16:45:41 by rapohlen          #+#    #+#              #
-#    Updated: 2026/04/25 20:55:27 by rapohlen         ###   ########.fr        #
+#    Updated: 2026/07/18 17:13:11 by rapohlen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 CFILES		= main.cpp \
-			  Bureaucrat.cpp
+			  Bureaucrat.cpp \
+			  Form.cpp
 SRCDIR		= .
 SRC			= $(addprefix $(SRCDIR)/, $(CFILES))
 

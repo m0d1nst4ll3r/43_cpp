@@ -1,30 +1,33 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include <iostream>
 
 int	main()
 {
 	Bureaucrat	bob("Bob", 150);
 	Bureaucrat	john("John", 1);
-	Bureaucrat	dfl;
+	Bureaucrat	dflBur;
+	Form		groceryList("Grocery list", 150, 150);
+	Form		topSecret("54B", 20, 10);
+	Form		dflForm;
 
-	std::cout << bob << " " << john << " " << dfl << std::endl;
+	std::cout << "Bureaucrats:\n\t" << bob << "\n\t" << john << "\n\t" << dflBur << "\n\n";
+	std::cout << "Forms:\n\t" << groceryList << "\n\t" << topSecret << "\n\t" << dflForm << "\n\n";
 
-	std::cout << "Attempt to declare grade 0 Bureaucrat:\n";
-	try { Bureaucrat bug("Bug", 0); }
+	std::cout << "Attempt to declare form with too high signing requirements:\n";
+	try { Form bug("Bug", 0, 2); }
 	catch (std::exception& e) { std::cout << e.what() << std::endl; }
 
-	std::cout << "Attempt to declare grade 151 Bureaucrat:\n";
-	try { Bureaucrat bug("Bug", 151); }
+	std::cout << "Attempt to declare form with too low signing requirements:\n";
+	try { Form bug("Bug", 150, 151); }
 	catch (std::exception& e) { std::cout << e.what() << std::endl; }
 
-	std::cout << "Attempt to demote at grade 150:\n";
-	try { bob.demote(); }
-	catch (std::exception& e) { std::cout << e.what() << std::endl; }
+	std::cout << "\n";
 
-	std::cout << "Attempt to promote at grade 1:\n";
-	try { john.promote(); }
-	catch (std::exception& e) { std::cout << e.what() << std::endl; }
+	bob.signForm(topSecret);
+	bob.signForm(groceryList);
+	john.signForm(topSecret);
+	john.signForm(topSecret);
 
-	john.demote();
-	bob.promote();
+	std::cout << "\n" << topSecret << "\n";
 }

@@ -5,7 +5,9 @@
 #include <iostream>
 #include <string>
 
-class FORM_HPP
+class Bureaucrat;
+
+class Form
 {
 	public:
 
@@ -21,7 +23,7 @@ class FORM_HPP
         virtual const char* what() const throw();
     };
 
-	Form(const std::string& name = "Default", bool signedVal = false, int gradeToSign = 150, int gradeToExec = 150);
+	Form(const std::string& name = "Default", int gradeToSign = 150, int gradeToExec = 150);
 	~Form();
 	Form(const Form& toCopy);
 	Form& operator=(const Form& op);
@@ -38,7 +40,7 @@ class FORM_HPP
 	bool				_signed;
 	const int			_gradeToSign;
 	const int			_gradeToExec;
-}
+};
 
 std::ostream&	operator<<(std::ostream& out, const Form& op);
 
