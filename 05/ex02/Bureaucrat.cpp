@@ -1,5 +1,5 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 #include <string>
 #include <iostream>
 
@@ -50,7 +50,7 @@ void Bureaucrat::demote()
 	_grade++;
 }
 
-void Bureaucrat::signForm(Form &form) const
+void Bureaucrat::signForm(AForm &form) const
 {
 	try
 	{
@@ -63,12 +63,25 @@ void Bureaucrat::signForm(Form &form) const
 	}
 }
 
+void Bureaucrat::executeForm(const AForm &form) const
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << _name << " executed " << form.getName() << ".\n";
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << _name << " couldn't sign " << form.getName() << ": " << e.what() << ".\n";
+	}
+}
+
 const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return "grade is too high";
+	return "Bureaucrat: grade is too high (must be 1 or higher)";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return "grade is too low";
+	return "Bureaucrat: grade is too low (must be 150 or lower)";
 }

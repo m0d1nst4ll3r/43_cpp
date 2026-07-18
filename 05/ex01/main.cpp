@@ -16,11 +16,11 @@ int	main()
 
 	std::cout << "Attempt to declare form with too high signing requirements:\n";
 	try { Form bug("Bug", 0, 2); }
-	catch (std::exception& e) { std::cout << e.what() << std::endl; }
+	catch (std::exception& e) { std::cerr << "Form declaration failed: " << e.what() << ".\n"; }
 
 	std::cout << "Attempt to declare form with too low signing requirements:\n";
 	try { Form bug("Bug", 150, 151); }
-	catch (std::exception& e) { std::cout << e.what() << std::endl; }
+	catch (std::exception& e) { std::cerr << "Form declaration failed: " << e.what() << ".\n"; }
 
 	std::cout << "\n";
 
