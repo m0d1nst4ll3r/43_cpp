@@ -33,12 +33,12 @@ namespace
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target)
-	: AForm("Shrubbery Creation Form", 145, 137), _target(target) {}
+	: AForm("Shrubbery Creation", 145, 137), _target(target) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &toCopy)
-	: AForm("Shrubbery Creation Form", 145, 137), _target(toCopy._target) {}
+	: AForm("Shrubbery Creation", 145, 137), _target(toCopy._target) {}
 
 ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm &op)
 {

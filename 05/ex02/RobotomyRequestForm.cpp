@@ -6,12 +6,12 @@
 #include <ctime>
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string &target)
-	: AForm("Robotomy Request Form", 72, 45), _target(target) {}
+	: AForm("Robotomy Request", 72, 45), _target(target) {}
 
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &toCopy)
-	: AForm("Robotomy Request Form", 72, 45), _target(toCopy._target) {}
+	: AForm("Robotomy Request", 72, 45), _target(toCopy._target) {}
 
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &op)
 {
