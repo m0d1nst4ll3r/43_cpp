@@ -11,7 +11,7 @@ int	main()
 	Bureaucrat	hermes("Hermes Conrad", 70);
 	Bureaucrat	john("John", 5);
 	Bureaucrat	dflBur;
-	ShrubberyCreationForm	scForm("Home");
+	ShrubberyCreationForm	scForm("home");
 	RobotomyRequestForm		rrForm("Bender");
 	PresidentialPardonForm	ppForm("Nobody");
 
