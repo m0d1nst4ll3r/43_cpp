@@ -63,7 +63,7 @@ void	AForm::execute(const Bureaucrat& executor) const
 	if (executor.getGrade() > _gradeToExec)
 		throw AForm::GradeTooLowException();
 	try { executeInternal(); }
-	catch (std::exception& e) { std::cout << e.what() << std::endl; }
+	catch (std::exception& e) { std::cout << _name << " execute failed: " << e.what() << std::endl; }
 }
 
 const char *AForm::GradeTooHighException::what() const throw()

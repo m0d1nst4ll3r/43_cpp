@@ -1,6 +1,9 @@
 #include "AForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include <iostream>
+#include <cstdlib>
+#include <sys/time.h>
+#include <ctime>
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string &target)
 	: AForm("Robotomy Request Form", 72, 45), _target(target) {}
@@ -19,5 +22,17 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 
 void RobotomyRequestForm::executeInternal() const
 {
-	std::cout << "Robotomy Request Form executed\n";
+	static bool	seeded = false;
+	if (!seeded)
+	{ // Combining tv_usec and std::clock for more randomness (this is overkill)
+		struct timeval	tv;
+		gettimeofday(&tv, NULL);
+		srand(static_cast<unsigned int>(tv.tv_usec) ^ static_cast<unsigned int>(std::clock()));
+		seeded = true;
+	}
+	std::cout << "* loud drilling noises *\n";
+	if (rand() % 2)
+		std::cout << _target << " has been robotomized.\n";
+	else
+		std::cout << "Robotomy has failed.\n";
 }
