@@ -13,7 +13,7 @@ namespace
 	{
 		file.open(filename, std::ios::app);
 		if (!file)
-			throw std::runtime_error(std::string(filename) + ": " + std::strerror(errno));
+			throw std::runtime_error(std::string("'") + filename + "': " + std::strerror(errno));
 	}
 
 	void	writeTrees(std::ofstream& file)
