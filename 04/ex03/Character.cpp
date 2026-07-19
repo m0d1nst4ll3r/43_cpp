@@ -22,7 +22,7 @@ Character::~Character()
 }
 
 // As per subject guidelines, copy is DEEP (allocates new Materia instead of copying address)
-Character::Character(Character& toCopy)
+Character::Character(const Character& toCopy)
 	: _name(toCopy._name)
 {
 	for (int i = 0; i < 4; ++i)
@@ -35,7 +35,7 @@ Character::Character(Character& toCopy)
 }
 
 // Copy is DEEP and old Materias are deleted before replacing
-Character&	Character::operator=(Character& op)
+Character&	Character::operator=(const Character& op)
 {
 	if (this != &op)
 	{
