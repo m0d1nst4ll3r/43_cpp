@@ -16,7 +16,8 @@ CFILES		= main.cpp \
 			  AForm.cpp \
 			  PresidentialPardonForm.cpp \
 			  RobotomyRequestForm.cpp \
-			  ShrubberyCreationForm.cpp
+			  ShrubberyCreationForm.cpp \
+			  Intern.cpp
 SRCDIR		= .
 SRC			= $(addprefix $(SRCDIR)/, $(CFILES))
 
