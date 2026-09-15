@@ -7,7 +7,7 @@ class ScalarConverter
 {
     public:
 
-    static void convert(const std::string& str);
+    static void convert(const char* str);
 };
 
 #endif /* SCALARCONVERTER_HPP */
