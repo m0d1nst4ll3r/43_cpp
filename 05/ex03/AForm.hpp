@@ -32,7 +32,7 @@ public:
 	};
 
 	AForm(const std::string &name = "Default", int gradeToSign = 150, int gradeToExec = 150);
-	~AForm();
+	virtual ~AForm();
 	AForm(const AForm &toCopy);
 	AForm &operator=(const AForm &op);
 

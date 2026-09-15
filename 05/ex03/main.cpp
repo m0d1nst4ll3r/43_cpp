@@ -41,4 +41,8 @@ int	main()
 	hermes.executeForm(*rrf);
 	john.executeForm(*rrf);
 	john.executeForm(*ppf);
+
+	delete rrf;
+	delete ppf;
+	delete scf;
 }
