@@ -43,10 +43,10 @@ AForm *Intern::makeForm(const std::string &form, const std::string &target)
 	{
 		if (form == forms[i])
 		{
-			std::cout << "Intern creates " << form << std::endl;
+			std::cout << "Intern creates " << form << ".\n";
 			return createForm[i](target);
 		}
 	}
-	std::cout << "Form '" << form << "' doesn't exist\n";
+	std::cout << "Form '" << form << "' doesn't exist.\n";
 	return NULL;
 }
