@@ -8,6 +8,10 @@ class ScalarConverter
     public:
 
     static void convert(const char* str);
+
+    private:
+
+    ScalarConverter();
 };
 
 #endif /* SCALARCONVERTER_HPP */
