@@ -27,4 +27,6 @@ int	main()
 
 	john.demote();
 	bob.promote();
+
+	std::cout << bob << " " << john << " " << dfl << std::endl;
 }
