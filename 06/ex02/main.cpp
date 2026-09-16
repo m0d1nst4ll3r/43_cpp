@@ -34,9 +34,9 @@ namespace
 	{
 		if (dynamic_cast<A*>(p))
 			std::cout << "Object is of type A.\n";
-		if (dynamic_cast<B*>(p))
+		else if (dynamic_cast<B*>(p))
 			std::cout << "Object is of type B.\n";
-		if (dynamic_cast<C*>(p))
+		else
 			std::cout << "Object is of type C.\n";
 	}
 
@@ -44,9 +44,9 @@ namespace
 	{
 		if (dynamic_cast<A*>(&p))
 			std::cout << "Object is of type A.\n";
-		if (dynamic_cast<B*>(&p))
+		else if (dynamic_cast<B*>(&p))
 			std::cout << "Object is of type B.\n";
-		if (dynamic_cast<C*>(&p))
+		else
 			std::cout << "Object is of type C.\n";
 		(void)p;
 	}
