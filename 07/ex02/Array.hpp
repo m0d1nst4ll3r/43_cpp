@@ -1,6 +1,7 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+#include <string>
 #include <stdexcept>
 
 template<typename T>class Array
@@ -52,14 +53,14 @@ template<typename T>class Array
 	T operator[](unsigned int i) const
 	{
 		if (i >= _size)
-			throw std::runtime_error("invalid index");
+			throw std::out_of_range("invalid index");
 		return _arr[i];
 	}
 
     T& operator[](unsigned int i)
 	{
 		if (i >= _size)
-			throw std::runtime_error("invalid index");
+			throw std::out_of_range("invalid index");
 		return _arr[i];
 	}
 
