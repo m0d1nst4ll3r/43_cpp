@@ -59,5 +59,6 @@ int	main()
 	unknown = generate();
 	identify(unknown);
 	identify(*unknown);
+	delete unknown;
 	return 0;
 }
