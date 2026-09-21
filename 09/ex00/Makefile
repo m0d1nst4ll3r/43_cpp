@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 # Source files
-CFILES		= main.cpp
+CFILES		= main.cpp \
+			  BitcoinExchange.cpp
 SRCDIR		= .
 SRC			= $(addprefix $(SRCDIR)/, $(CFILES))
 
@@ -26,7 +27,7 @@ OBJ			= $(SRC:%.cpp=$(BUILDDIR)/%.o)
 DEP			= $(OBJ:.o=.d)
 
 # Output binary
-NAME		= a.out
+NAME		= btc
 
 # Compiler settings
 CC			= c++

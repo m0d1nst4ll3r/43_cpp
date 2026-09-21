@@ -17,7 +17,7 @@ class BitcoinExchange
 
 	private:
 
-	std::map<int, int>	_db;
+	std::map<std::string, double>	_db;
 };
 
 #endif /* BITCOINEXCHANGE_HPP */
