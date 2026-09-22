@@ -5,7 +5,7 @@ int	main(int argc, char **argv)
 {
 	if (argc < 2)
 	{
-		std::cout << "No input file provided\n";
+		std::cout << "\033[31mError\033[0m: No input file provided\n";
 		return 1;
 	}
 	BitcoinExchange	bcex;
