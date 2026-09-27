@@ -2,6 +2,7 @@
 #define RPN_HPP
 
 #include <stack>
+#include <list>
 #include <string>
 
 class RPN
@@ -18,7 +19,7 @@ class RPN
 
 	private:
 
-	std::stack<char>	_contents;
+	std::stack<char, std::list<char> >	_contents;
 };
 
 #endif /* RPN_HPP */

@@ -1,5 +1,6 @@
 #include "RPN.hpp"
 #include <stack>
+#include <list>
 #include <string>
 #include <sstream>
 #include <stdexcept>
@@ -7,7 +8,7 @@
 
 namespace
 {
-	double recurseRPN(std::stack<char>& contents)
+	double recurseRPN(std::stack<char, std::list<char> >& contents)
 	{
 		if (contents.empty())
 			throw std::runtime_error("not a valid reverse polish notation");
@@ -55,7 +56,7 @@ RPN& RPN::operator=(const RPN& op)
 
 void RPN::display()
 {
-	std::stack<char>	copy(_contents);
+	std::stack<char, std::list<char> >	copy(_contents);
 	std::cout << "\033[36mContents\033[0m:";
 	while (!copy.empty())
 	{
@@ -67,7 +68,7 @@ void RPN::display()
 
 double RPN::calculate()
 {
-	std::stack<char>	copy(_contents);
+	std::stack<char, std::list<char> >	copy(_contents);
 	double result = recurseRPN(copy);
 	if (!copy.empty())
 		throw std::runtime_error("not a valid reverse polish notation");
