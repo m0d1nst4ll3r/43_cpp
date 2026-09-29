@@ -2,7 +2,7 @@
 #define PMERGEME_HPP
 
 #include <vector>
-#include <list>
+#include <deque>
 
 class PmergeMe
 {
@@ -13,11 +13,14 @@ class PmergeMe
 	PmergeMe(const PmergeMe& toCopy);
 	PmergeMe& operator=(const PmergeMe& op);
 
-	void sort(); // Sorts with vector/list and prints analysis
+	void sort(); // Sorts with vector/deque and prints analysis
 
 	private:
 
-	std::vector<unsigned int>	_toSort; // vector sorting does not use this directly (like list)
+	std::vector<unsigned int>	_sortVector() const;
+	std::deque<unsigned int>	_sortDeque() const;
+
+	std::vector<unsigned int>	_toSort; // Only ever used to fill containers
 };
 
 #endif /* PMERGEME_HPP */
