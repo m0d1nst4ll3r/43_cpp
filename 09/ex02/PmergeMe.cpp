@@ -22,6 +22,9 @@ namespace
 	// Used in construction
 	bool	isInt(const char* str, unsigned int& val)
 	{
+		if (!*str)
+			return false;
+
 		double res;
 
 		for (int i = 0; str[i]; ++i)
