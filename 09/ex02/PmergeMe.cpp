@@ -7,9 +7,18 @@
 #include <deque>
 #include <algorithm>
 #include <limits>
+#include <sys/time.h>
 
 namespace
 {
+	long	getTime()
+	{
+		struct timeval	tv;
+
+		gettimeofday(&tv, 0);
+		return (1000000 * tv.tv_sec + tv.tv_usec);
+	}
+
 	// Used in construction
 	bool	isInt(const char* str, unsigned int& val)
 	{
@@ -78,9 +87,6 @@ namespace
 		winnerValues.reserve(m);
 		for (unsigned int i = 0; i < m; ++i) winnerValues.push_back(values[winnerIdx[i]]);
 		std::vector<unsigned int> winnerOrder = recurseVector(winnerValues);
-		std::cout << "Winner order: ";
-		printElems(winnerOrder.begin(), winnerOrder.end());
-		std::cout << "\n";
 
 		// Step 3: re-order pairs
 		std::vector<unsigned int> sortedWinnerIdx;
@@ -103,10 +109,6 @@ namespace
 		// Insert first loser (guaranteed to be there)
 		sortedWinnerIdx.insert(sortedWinnerIdx.begin(), sortedLoserIdx[0]);
 
-		std::cout << "sortedWinner before loop: ";
-		printElems(sortedWinnerIdx.begin(), sortedWinnerIdx.end());
-		std::cout << "\n";
-
 		unsigned int tmp;
 		unsigned int lower = 0;
 		unsigned int upper = 2;
@@ -117,7 +119,7 @@ namespace
 			unsigned int lo = 0;
 			unsigned int hi;
 			unsigned int elemIdx;
-			if (!odd || idx != n - 1)
+			if (idx < m)
 			{
 				elemIdx = sortedLoserIdx[idx];
 				hi = winnerPos[idx];
@@ -217,7 +219,7 @@ namespace
 			unsigned int lo = 0;
 			unsigned int hi;
 			unsigned int elemIdx;
-			if (!odd || idx != n - 1)
+			if (idx < m)
 			{
 				elemIdx = sortedLoserIdx[idx];
 				hi = winnerPos[idx];
@@ -294,9 +296,6 @@ std::vector<unsigned int> PmergeMe::_sortVector() const
 	unsorted.insert(unsorted.end(), _toSort.begin(), _toSort.end());
 	// Recurse, get permutation back
 	perm = recurseVector(unsorted);
-	std::cout << "Debug: ";
-	printElems(perm.begin(), perm.end());
-	std::cout << "\n";
 	// Apply permutation
 	for (std::vector<unsigned int>::iterator it = perm.begin(); it != perm.end(); ++it)
 		sorted.push_back(unsorted[*it]);
@@ -326,9 +325,17 @@ void	PmergeMe::sort()
 	// Unsure how to get time yet (in pdf, seems to be picoseconds)
 	std::vector<unsigned int>	sortedVector;
 	std::deque<unsigned int>	sortedDeque;
+	long	timeStart;
+	long	timeVector;
+	long	timeDeque;
 
+	timeStart = getTime();
 	sortedVector = _sortVector();
+	timeVector = getTime() - timeStart;
+
+	timeStart = getTime();
 	sortedDeque = _sortDeque();
+	timeDeque = getTime() - timeStart;
 
 	if (sortedVector.size() != sortedDeque.size() || !std::equal(sortedVector.begin(), sortedVector.end(), sortedDeque.begin()))
 		throw std::runtime_error("unexpected difference in sorted arrays");
@@ -342,6 +349,6 @@ void	PmergeMe::sort()
 	std::cout << "After:   \033[33m";
 	printElems(sortedVector.begin(), sortedVector.end());
 	std::cout << "\033[0m\n";
-	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::vector\033[0m : " << "<WIP>\n";
-	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::deque\033[0m  : " << "<WIP>\n";
+	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::vector\033[0m : " << timeVector << "us\n";
+	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::deque\033[0m  : " << timeDeque << "us\n";
 }
