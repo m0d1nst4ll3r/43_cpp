@@ -135,13 +135,8 @@ namespace
 				unsigned int mid = (hi + lo) / 2;
 				if (values[elemIdx] < values[sortedWinnerIdx[mid]])
 					hi = mid;
-				else if (values[elemIdx] > values[sortedWinnerIdx[mid]])
+				else
 					lo = mid + 1;
-				else // special equal case, end right now
-				{
-					lo = mid;
-					hi = mid;
-				}
 			}
 			// Insert elem
 			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
@@ -234,13 +229,8 @@ namespace
 				unsigned int mid = (hi + lo) / 2;
 				if (values[elemIdx] < values[sortedWinnerIdx[mid]])
 					hi = mid;
-				else if (values[elemIdx] > values[sortedWinnerIdx[mid]])
-					lo = mid + 1;
 				else
-				{
-					lo = mid;
-					hi = mid;
-				}
+					lo = mid + 1;
 			}
 			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
 			for (unsigned int i = 0; i < m; ++i)
