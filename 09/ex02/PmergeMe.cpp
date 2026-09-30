@@ -29,7 +29,7 @@ namespace
 
 		for (int i = 0; str[i]; ++i)
 		{
-			if (!std::isdigit(str[i]))
+			if (!std::isdigit(static_cast<unsigned char>(str[i])))
 				return false;
 		}
 		res = std::strtod(str, 0);
