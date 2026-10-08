@@ -97,17 +97,13 @@ namespace
 		}
 
 		// Step 4: insert losers back
-		// Build winner positions, starting out as 1 2 3 4 5 6 7 8...
-		std::vector<unsigned int> winnerPos;
-		winnerPos.reserve(m);
-		for (unsigned int i = 0; i < m; ++i) winnerPos.push_back(i + 1);
-
 		// Insert first loser (guaranteed to be there)
 		sortedWinnerIdx.insert(sortedWinnerIdx.begin(), sortedLoserIdx[0]);
 
 		unsigned int tmp;
 		unsigned int lower = 0;
 		unsigned int upper = 2;
+		unsigned int insert = 4;
 		unsigned int idx = std::min(upper, m + odd - 1);
 		while (lower < m + odd - 1)
 		{
@@ -118,7 +114,7 @@ namespace
 			if (idx < m)
 			{
 				elemIdx = sortedLoserIdx[idx];
-				hi = winnerPos[idx];
+				hi = std::min(insert - 1, static_cast<unsigned int>(sortedWinnerIdx.size()));
 			}
 			else // Straggler case (unpaired value)
 			{
@@ -136,12 +132,6 @@ namespace
 			}
 			// Insert elem
 			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
-			// Update winner pos
-			for (unsigned int i = 0; i < m; ++i)
-			{
-				if (winnerPos[i] >= lo)
-					winnerPos[i]++;
-			}
 			idx--;
 			if (idx == lower)
 			{
@@ -149,6 +139,7 @@ namespace
 				lower = upper;
 				upper += (tmp + 1) * 2;
 				idx = std::min(upper, m + odd - 1);
+				insert *= 2;
 			}
 		}
 		return sortedWinnerIdx;
@@ -196,14 +187,12 @@ namespace
 			sortedLoserIdx.push_back(loserIdx[winnerOrder[i]]);
 		}
 
-		std::deque<unsigned int> winnerPos;
-		for (unsigned int i = 0; i < m; ++i) winnerPos.push_back(i + 1);
-
 		sortedWinnerIdx.push_front(sortedLoserIdx[0]);
 
 		unsigned int tmp;
 		unsigned int lower = 0;
 		unsigned int upper = 2;
+		unsigned int insert = 4;
 		unsigned int idx = std::min(upper, m + odd - 1);
 		while (lower < m + odd - 1)
 		{
@@ -213,7 +202,7 @@ namespace
 			if (idx < m)
 			{
 				elemIdx = sortedLoserIdx[idx];
-				hi = winnerPos[idx];
+				hi = std::min(insert - 1, static_cast<unsigned int>(sortedWinnerIdx.size()));
 			}
 			else
 			{
@@ -229,11 +218,6 @@ namespace
 					lo = mid + 1;
 			}
 			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
-			for (unsigned int i = 0; i < m; ++i)
-			{
-				if (winnerPos[i] >= lo)
-					winnerPos[i]++;
-			}
 			idx--;
 			if (idx == lower)
 			{
@@ -241,6 +225,7 @@ namespace
 				lower = upper;
 				upper += (tmp + 1) * 2;
 				idx = std::min(upper, m + odd - 1);
+				insert *= 2;
 			}
 		}
 		return sortedWinnerIdx;
