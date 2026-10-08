@@ -82,8 +82,8 @@ namespace
 
 		// Step 4: Insert loser values in Jacobsthal order
 		// Insert losers
-		unsigned int	lower = 0; // Lower bound of current Jacobsthal block ([0-2] -> [2-4] -> [4-10] --|)
-		unsigned int	upper = 2; // Upper bound --------------------------- (...<- [42-20] <- [10-20] <-|)
+		unsigned int	lower = 0; // Lower bound of current Jacobsthal block ([0-2] -> [2-4] -> [4-10] ---┐)
+		unsigned int	upper = 2; // Upper bound --------------------------- ( ... <- [42-20] <- [10-20] <┘)
 		unsigned int	insert = 4; // Size of binary search (3 -> 7 -> 15 -> 31 -> 63 -> ...)
 		unsigned int	loserVirtualIdx = std::min(upper, pairs - 1 + straggler); // Virtual index (2 -> 1 -> 4 -> 3 -> 10 -> 9 -> ...)
 		while (lower < pairs - 1 + straggler)
