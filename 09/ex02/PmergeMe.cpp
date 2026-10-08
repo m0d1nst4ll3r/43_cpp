@@ -44,191 +44,162 @@ namespace
 		}
 	}
 
-	std::vector<unsigned int> recurseVector(std::vector<unsigned int> values)
+	// Sorts values directly instead of returning a fresh vector
+	void recurseVector(std::vector<unsigned int>& values, unsigned int blockSize)
 	{
-		// Step 0: end of recurse
-		if (values.size() == 1) // cannot be 0 for our usecase
-			return std::vector<unsigned int>(1, 0);
-
-		// Constants
 		const unsigned int	n = values.size();
-		const unsigned int	m = n / 2; // number of pairs
-		const bool			odd = n % 2;
-		const unsigned int	stragglerIdx = n - 1; // unpaired value
+		const unsigned int	pairSize = blockSize * 2;
+		const unsigned int	pairs = n / pairSize;
+		const bool			straggler = (n >= pairs * pairSize + blockSize);
+		const unsigned int	losers = pairs - 1 + straggler;
 
-		// Step 1: build pairs
-		std::vector<unsigned int> winnerIdx;
-		std::vector<unsigned int> loserIdx;
-		winnerIdx.reserve(m);
-		loserIdx.reserve(m);
+		// Step 0: Recursion end
+		if (n < pairSize)
+			return ;
 
-		for (unsigned int i = 0; i < m; ++i)
+		// Step 1: Compare blocks and order winner-losers (straggler block + tail are untouched)
+		for (unsigned int i = 0; i < pairs; ++i)
 		{
-			unsigned int left = i * 2;
-			unsigned int right = i * 2 + 1;
-			if (values[left] < values[right]) // order winner-losers
+			if (values[i * pairSize] < values[i * pairSize + blockSize]) // Compare 1st value of each block
 			{
-				winnerIdx.push_back(right);
-				loserIdx.push_back(left);
-			}
-			else
-			{
-				winnerIdx.push_back(left);
-				loserIdx.push_back(right);
+				for (unsigned int j = 0; j < blockSize; ++j) // Swap blocks
+					std::swap(values[i * pairSize + j], values[i * pairSize + blockSize + j]);
 			}
 		}
 
-		// Step 2: build winner values, send to recurse
-		std::vector<unsigned int> winnerValues;
-		winnerValues.reserve(m);
-		for (unsigned int i = 0; i < m; ++i) winnerValues.push_back(values[winnerIdx[i]]);
-		std::vector<unsigned int> winnerOrder = recurseVector(winnerValues);
+		// Step 2: Recurse to sort the pairs
+		recurseVector(values, blockSize * 2);
 
-		// Step 3: re-order pairs
-		std::vector<unsigned int> sortedWinnerIdx;
-		std::vector<unsigned int> sortedLoserIdx;
-		sortedWinnerIdx.reserve(n);
-		sortedLoserIdx.reserve(m);
+		// Step 3: Insert winner values into fresh vector
+		// Create fresh vector
+		std::vector<unsigned int>	sorted;
+		sorted.reserve(n);
+		// Insert b1 block
+		sorted.insert(sorted.end(), values.begin() + blockSize, values.begin() + pairSize);
+		// Insert winners a1, a2, a3... a(pairs)
+		for (unsigned int i = 0; i < pairs; ++i)
+			sorted.insert(sorted.end(), values.begin() + i * pairSize, values.begin() + i * pairSize + blockSize);
 
-		for (unsigned int i = 0; i < m; ++i)
-		{
-			sortedWinnerIdx.push_back(winnerIdx[winnerOrder[i]]);
-			sortedLoserIdx.push_back(loserIdx[winnerOrder[i]]);
-		}
-
-		// Step 4: insert losers back
-		// Insert first loser (guaranteed to be there)
-		sortedWinnerIdx.insert(sortedWinnerIdx.begin(), sortedLoserIdx[0]);
-
-		unsigned int tmp;
-		unsigned int lower = 0;
-		unsigned int upper = 2;
-		unsigned int insert = 4;
-		unsigned int idx = std::min(upper, m + odd - 1);
-		while (lower < m + odd - 1)
+		// Step 4: Insert loser values in Jacobsthal order
+		// Insert losers
+		unsigned int	lower = 0; // Lower bound of current Jacobsthal block ([0-2] -> [2-4] -> [4-10] --|)
+		unsigned int	upper = 2; // Upper bound --------------------------- (...<- [42-20] <- [10-20] <-|)
+		unsigned int	insert = 4; // Size of binary search (3 -> 7 -> 15 -> 31 -> 63 -> ...)
+		unsigned int	loserVirtualIdx = std::min(upper, pairs - 1 + straggler); // Virtual index (2 -> 1 -> 4 -> 3 -> 10 -> 9 -> ...)
+		while (lower < pairs - 1 + straggler)
 		{
 			// Find binary search boundaries
 			unsigned int lo = 0;
 			unsigned int hi;
-			unsigned int elemIdx;
-			if (idx < m)
+			unsigned int loserRealIdx; // Real index (in values[], accounting for blockSize)
+			if (loserVirtualIdx < pairs) // Loser is paired with winner
 			{
-				elemIdx = sortedLoserIdx[idx];
-				hi = std::min(insert - 1, static_cast<unsigned int>(sortedWinnerIdx.size()));
+				loserRealIdx = loserVirtualIdx * pairSize + blockSize;
+				hi = std::min(insert - 1, static_cast<unsigned int>(sorted.size() / blockSize));
 			}
-			else // Straggler case (unpaired value)
+			else // Loser is straggler (unpaired)
 			{
-				elemIdx = stragglerIdx;
-				hi = sortedWinnerIdx.size();
+				loserRealIdx = loserVirtualIdx * pairSize; // No paired winner block
+				hi = sorted.size() / blockSize;
 			}
 			// Execute binary search
 			while (lo < hi)
 			{
-				unsigned int mid = (hi + lo) / 2;
-				if (values[elemIdx] < values[sortedWinnerIdx[mid]])
+				unsigned int mid = (lo + hi) / 2;
+				if (values[loserRealIdx] < sorted[mid * blockSize]) // Compare loser to 1st value of block
 					hi = mid;
 				else
 					lo = mid + 1;
 			}
-			// Insert elem
-			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
-			idx--;
-			if (idx == lower)
+			// Insert loser block
+			sorted.insert(sorted.begin() + lo * blockSize, values.begin() + loserRealIdx, values.begin() + loserRealIdx + blockSize);
+			// Idx works backwards (2 -> 1 -> 4 -> 3 -> 10 -> 9 -> 8 -> 7 -> ...)
+			loserVirtualIdx--;
+			// If Jacobstahl block is completed, go to next block (2 -> 2 -> 6 -> 10 -> 22 -> ...)
+			if (loserVirtualIdx == lower)
 			{
-				tmp = lower;
+				unsigned int tmp = lower;
 				lower = upper;
 				upper += (tmp + 1) * 2;
-				idx = std::min(upper, m + odd - 1);
+				loserVirtualIdx = std::min(upper, losers);
 				insert *= 2;
 			}
 		}
-		return sortedWinnerIdx;
+		// Append tail (for last elems < blockSize)
+		sorted.insert(sorted.end(), values.begin() + pairs * pairSize + straggler * blockSize, values.end());
+
+		// Done: replace old vector
+		values = sorted;
 	}
 
-	std::deque<unsigned int> recurseDeque(std::deque<unsigned int> values)
+	void recurseDeque(std::deque<unsigned int>& values, unsigned int blockSize)
 	{
-		if (values.size() == 1)
-			return std::deque<unsigned int>(1, 0);
-
 		const unsigned int	n = values.size();
-		const unsigned int	m = n / 2;
-		const bool			odd = n % 2;
-		const unsigned int	stragglerIdx = n - 1;
+		const unsigned int	pairSize = blockSize * 2;
+		const unsigned int	pairs = n / pairSize;
+		const bool			straggler = (n >= pairs * pairSize + blockSize);
+		const unsigned int	losers = pairs - 1 + straggler;
 
-		std::deque<unsigned int> winnerIdx;
-		std::deque<unsigned int> loserIdx;
+		if (n < pairSize)
+			return ;
 
-		for (unsigned int i = 0; i < m; ++i)
+		for (unsigned int i = 0; i < pairs; ++i)
 		{
-			unsigned int left = i * 2;
-			unsigned int right = i * 2 + 1;
-			if (values[left] < values[right])
+			if (values[i * pairSize] < values[i * pairSize + blockSize])
 			{
-				winnerIdx.push_back(right);
-				loserIdx.push_back(left);
-			}
-			else
-			{
-				winnerIdx.push_back(left);
-				loserIdx.push_back(right);
+				for (unsigned int j = 0; j < blockSize; ++j) // Swap blocks
+					std::swap(values[i * pairSize + j], values[i * pairSize + blockSize + j]);
 			}
 		}
 
-		std::deque<unsigned int> winnerValues;
-		for (unsigned int i = 0; i < m; ++i) winnerValues.push_back(values[winnerIdx[i]]);
-		std::deque<unsigned int> winnerOrder = recurseDeque(winnerValues);
+		recurseDeque(values, blockSize * 2);
 
-		std::deque<unsigned int> sortedWinnerIdx;
-		std::deque<unsigned int> sortedLoserIdx;
+		std::deque<unsigned int>	sorted;
+		sorted.insert(sorted.end(), values.begin() + blockSize, values.begin() + pairSize);
+		for (unsigned int i = 0; i < pairs; ++i)
+			sorted.insert(sorted.end(), values.begin() + i * pairSize, values.begin() + i * pairSize + blockSize);
 
-		for (unsigned int i = 0; i < m; ++i)
-		{
-			sortedWinnerIdx.push_back(winnerIdx[winnerOrder[i]]);
-			sortedLoserIdx.push_back(loserIdx[winnerOrder[i]]);
-		}
-
-		sortedWinnerIdx.push_front(sortedLoserIdx[0]);
-
-		unsigned int tmp;
-		unsigned int lower = 0;
-		unsigned int upper = 2;
-		unsigned int insert = 4;
-		unsigned int idx = std::min(upper, m + odd - 1);
-		while (lower < m + odd - 1)
+		unsigned int	lower = 0;
+		unsigned int	upper = 2;
+		unsigned int	insert = 4;
+		unsigned int	loserVirtualIdx = std::min(upper, pairs - 1 + straggler);
+		while (lower < pairs - 1 + straggler)
 		{
 			unsigned int lo = 0;
 			unsigned int hi;
-			unsigned int elemIdx;
-			if (idx < m)
+			unsigned int loserRealIdx;
+			if (loserVirtualIdx < pairs)
 			{
-				elemIdx = sortedLoserIdx[idx];
-				hi = std::min(insert - 1, static_cast<unsigned int>(sortedWinnerIdx.size()));
+				loserRealIdx = loserVirtualIdx * pairSize + blockSize;
+				hi = std::min(insert - 1, static_cast<unsigned int>(sorted.size() / blockSize));
 			}
 			else
 			{
-				elemIdx = stragglerIdx;
-				hi = sortedWinnerIdx.size();
+				loserRealIdx = loserVirtualIdx * pairSize; // No paired winner block
+				hi = sorted.size() / blockSize;
 			}
 			while (lo < hi)
 			{
-				unsigned int mid = (hi + lo) / 2;
-				if (values[elemIdx] < values[sortedWinnerIdx[mid]])
+				unsigned int mid = (lo + hi) / 2;
+				if (values[loserRealIdx] < sorted[mid * blockSize])
 					hi = mid;
 				else
 					lo = mid + 1;
 			}
-			sortedWinnerIdx.insert(sortedWinnerIdx.begin() + lo, elemIdx);
-			idx--;
-			if (idx == lower)
+			sorted.insert(sorted.begin() + lo * blockSize, values.begin() + loserRealIdx, values.begin() + loserRealIdx + blockSize);
+			loserVirtualIdx--;
+			if (loserVirtualIdx == lower)
 			{
-				tmp = lower;
+				unsigned int tmp = lower;
 				lower = upper;
 				upper += (tmp + 1) * 2;
-				idx = std::min(upper, m + odd - 1);
+				loserVirtualIdx = std::min(upper, losers);
 				insert *= 2;
 			}
 		}
-		return sortedWinnerIdx;
+		sorted.insert(sorted.end(), values.begin() + pairs * pairSize + straggler * blockSize, values.end());
+
+		values = sorted;
 	}
 }
 
@@ -259,33 +230,21 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& op)
 
 std::vector<unsigned int> PmergeMe::_sortVector() const
 {
-	std::vector<unsigned int>	unsorted;
-	std::vector<unsigned int>	perm;
-	std::vector<unsigned int>	sorted;
+	std::vector<unsigned int>	vec;
 
 	// Build from _toSort
-	unsorted.insert(unsorted.end(), _toSort.begin(), _toSort.end());
-	// Recurse, get permutation back
-	perm = recurseVector(unsorted);
-	// Apply permutation
-	for (std::vector<unsigned int>::iterator it = perm.begin(); it != perm.end(); ++it)
-		sorted.push_back(unsorted[*it]);
-
-	return sorted;
+	vec.insert(vec.end(), _toSort.begin(), _toSort.end());
+	recurseVector(vec, 1);
+	return vec;
 }
 
 std::deque<unsigned int> PmergeMe::_sortDeque() const
 {
-	std::deque<unsigned int>	unsorted;
-	std::deque<unsigned int>	perm;
-	std::deque<unsigned int>	sorted;
+	std::deque<unsigned int>	deq;
 
-	unsorted.insert(unsorted.end(), _toSort.begin(), _toSort.end());
-	perm = recurseDeque(unsorted);
-	for (std::deque<unsigned int>::iterator it = perm.begin(); it != perm.end(); ++it)
-		sorted.push_back(unsorted[*it]);
-
-	return sorted;
+	deq.insert(deq.end(), _toSort.begin(), _toSort.end());
+	recurseDeque(deq, 1);
+	return deq;
 }
 
 void	PmergeMe::sort()
