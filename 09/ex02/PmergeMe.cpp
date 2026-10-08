@@ -7,17 +7,10 @@
 #include <deque>
 #include <algorithm>
 #include <limits>
-#include <sys/time.h>
+#include <ctime>
 
 namespace
 {
-	long	getTime()
-	{
-		struct timeval	tv;
-
-		gettimeofday(&tv, 0);
-		return (1000000 * tv.tv_sec + tv.tv_usec);
-	}
 
 	// Used in construction
 	bool	isInt(const char* str, unsigned int& val)
@@ -318,17 +311,16 @@ void	PmergeMe::sort()
 	// Unsure how to get time yet (in pdf, seems to be picoseconds)
 	std::vector<unsigned int>	sortedVector;
 	std::deque<unsigned int>	sortedDeque;
-	long	timeStart;
-	long	timeVector;
-	long	timeDeque;
+	std::clock_t	timeVector;
+	std::clock_t	timeDeque;
 
-	timeStart = getTime();
+	timeVector = std::clock();
 	sortedVector = _sortVector();
-	timeVector = getTime() - timeStart;
+	timeVector = std::clock() - timeVector;
 
-	timeStart = getTime();
+	timeDeque = std::clock();
 	sortedDeque = _sortDeque();
-	timeDeque = getTime() - timeStart;
+	timeDeque = std::clock() - timeDeque;
 
 	if (sortedVector.size() != sortedDeque.size() || !std::equal(sortedVector.begin(), sortedVector.end(), sortedDeque.begin()))
 		throw std::runtime_error("unexpected difference in sorted arrays");
@@ -342,6 +334,8 @@ void	PmergeMe::sort()
 	std::cout << "After:   \033[33m";
 	printElems(sortedVector.begin(), sortedVector.end());
 	std::cout << "\033[0m\n";
-	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::vector\033[0m : " << timeVector << "us\n";
-	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::deque\033[0m  : " << timeDeque << "us\n";
+	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::vector\033[0m : "
+	<< static_cast<long>(static_cast<double>(timeVector) * 1000000 / CLOCKS_PER_SEC) << "us\n";
+	std::cout << "Time to process a range of \033[32m" << _toSort.size() << "\033[0m elements with \033[36mstd::deque\033[0m  : "
+	<< static_cast<long>(static_cast<double>(timeDeque) * 1000000 / CLOCKS_PER_SEC) << "us\n";
 }
